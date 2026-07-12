@@ -21,7 +21,7 @@ You will need a working installation of ROS 2 (e.g., Humble or Foxy) and standar
 1. Clone this repository into your ROS 2 workspace's `src` folder:
    ```bash
    cd ~/ros2_ws/src
-   git clone https://github.com/YOUR_USERNAME/Robot-Dog.git
+   git clone https://github.com/sayakchakrabarty2007-netizen/Robot-Dog.git
    ```
 2. Build the workspace:
    ```bash
