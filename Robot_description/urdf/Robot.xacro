@@ -1,0 +1,1109 @@
+<?xml version="1.0" ?>
+<robot name="Robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find Robot_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find Robot_description)/urdf/Robot.trans" />
+<xacro:include filename="$(find Robot_description)/urdf/Robot.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="1.4662269187703477e-05 0.011546280503874469 -1.4215711144037172e-05" rpy="0 0 0"/>
+    <mass value="1.9509833561659489"/>
+    <inertia ixx="0.003469" iyy="0.015592" izz="0.012814" ixy="0.0" iyz="-0.0" ixz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a_1">
+  <inertial>
+    <origin xyz="-0.0171831788225546 0.015000004935446773 0.02136766503665647" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="-0.0" iyz="-0.0" ixz="1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0644 -0.00785 -0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0644 -0.00785 -0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1__1">
+  <inertial>
+    <origin xyz="0.01481682165428258 -0.015000004935446783 -0.021367666750289997" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="0.0" iyz="-0.0" ixz="-1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0972 -0.03785 0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0972 -0.03785 0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__2__1">
+  <inertial>
+    <origin xyz="-0.014816822734714574 0.014999995064553226 0.021367665893473255" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="-0.0" iyz="0.0" ixz="-1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0972 -0.00785 -0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0972 -0.00785 -0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__3__1">
+  <inertial>
+    <origin xyz="-0.014816822734714574 0.015000004935446783 -0.02136766589347331" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="0.0" iyz="0.0" ixz="1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0972 -0.00785 0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0972 -0.00785 0.041328" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_femur__3__1">
+  <inertial>
+    <origin xyz="0.022425811828788486 -0.03892583161584007 0.009692501970942596" rpy="0 0 0"/>
+    <mass value="0.1686419756554846"/>
+    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.062842 -0.036345 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.062842 -0.036345 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_femur_1">
+  <inertial>
+    <origin xyz="0.022425812909024873 -0.03892583161584007 0.009692502827759242" rpy="0 0 0"/>
+    <mass value="0.1686419756554846"/>
+    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.098802 -0.036645 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.098802 -0.036645 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_femur__2__1">
+  <inertial>
+    <origin xyz="0.022497851507857408 -0.03888423948773731 -0.00969250384848891" rpy="0 0 0"/>
+    <mass value="0.1686419756554846"/>
+    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.06285 -0.036345 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.06285 -0.036345 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_femur__1__1">
+  <inertial>
+    <origin xyz="0.022497852588093767 -0.03888423948773728 -0.009692502991672153" rpy="0 0 0"/>
+    <mass value="0.1686419756554846"/>
+    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.098442 -0.036245 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.098442 -0.036245 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_TIBIA_1">
+  <inertial>
+    <origin xyz="-0.02477098826948545 -0.04518985831866687 -0.007607417226580426" rpy="0 0 0"/>
+    <mass value="0.24073976661793736"/>
+    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.007952 0.058574 0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.007952 0.058574 0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_TIBIA__1__1">
+  <inertial>
+    <origin xyz="-0.024770987189249027 -0.04518985831866685 -0.007607416369763614" rpy="0 0 0"/>
+    <mass value="0.24073976661793736"/>
+    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15334 0.058674 0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.15334 0.058674 0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Another__1__1">
+  <inertial>
+    <origin xyz="-0.024803750749565832 -0.045245780605014954 0.007610469287207489" rpy="0 0 0"/>
+    <mass value="0.24063079586798816"/>
+    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.008089 0.058658 -0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.008089 0.058658 -0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Another_1">
+  <inertial>
+    <origin xyz="-0.024803749669329522 -0.04524578060501495 0.007610470144024134" rpy="0 0 0"/>
+    <mass value="0.24063079586798816"/>
+    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.153555 0.058358 -0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.153555 0.058358 -0.155336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Knee_Motor_to_Link_Joint__1__1">
+  <inertial>
+    <origin xyz="-0.008503620557143196 -0.009759814247963558 0.004174865661029398" rpy="0 0 0"/>
+    <mass value="0.009074878535242492"/>
+    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.062802 -0.007845 -0.151336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.062802 -0.007845 -0.151336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Knee_Motor_to_Link_Joint__2__1">
+  <inertial>
+    <origin xyz="-0.008134902526149346 -0.01006920541177891 -0.0041748658249422255" rpy="0 0 0"/>
+    <mass value="0.009074878535242492"/>
+    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.062442 -0.007445 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.062442 -0.007445 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Knee_Motor_to_Link_Joint__3__1">
+  <inertial>
+    <origin xyz="-0.008134903606385746 -0.010069205411778939 -0.004174866681759093" rpy="0 0 0"/>
+    <mass value="0.009074878535242492"/>
+    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.09885 -0.007545 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.09885 -0.007545 0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Knee_Motor_to_Link_Joint_1">
+  <inertial>
+    <origin xyz="-0.008503621637379555 -0.009759814247963605 0.0041748648042127245" rpy="0 0 0"/>
+    <mass value="0.009074878535242492"/>
+    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.098842 -0.007545 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.098842 -0.007545 -0.153336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Hip_Link_1">
+  <inertial>
+    <origin xyz="0.0384821258495088 -0.036765030084618525 0.004000437265788498" rpy="0 0 0"/>
+    <mass value="0.07197440836980624"/>
+    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.114912 0.011606 -0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.114912 0.011606 -0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Hip_Link__1__1">
+  <inertial>
+    <origin xyz="0.03848212692974514 -0.03676503008461847 0.004000438122605199" rpy="0 0 0"/>
+    <mass value="0.07197440836980624"/>
+    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.046732 0.011306 -0.158336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.046732 0.011306 -0.158336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Hip_Link__2__1">
+  <inertial>
+    <origin xyz="0.038601163330368726 -0.03664002841539631 -0.004000439143334866" rpy="0 0 0"/>
+    <mass value="0.07197440836980624"/>
+    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.11492 0.011606 0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.11492 0.011606 0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Dog_Tibia_Hip_Link__3__1">
+  <inertial>
+    <origin xyz="0.03860116441060513 -0.03664002841539631 -0.004000438286518027" rpy="0 0 0"/>
+    <mass value="0.07197440836980624"/>
+    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.046372 0.011706 0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.046372 0.011706 0.160336" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Foot2_1">
+  <inertial>
+    <origin xyz="-0.001783446323468399 -0.0030892144525749843 4.372678115149853e-07" rpy="0 0 0"/>
+    <mass value="0.0834021456021728"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.066532 0.160444 -0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.066532 0.160444 -0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Foot2__1__1">
+  <inertial>
+    <origin xyz="-0.0017834452432320264 -0.0030892144525748733 4.3812462796610774e-07" rpy="0 0 0"/>
+    <mass value="0.0834021456021728"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.095112 0.160144 -0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.095112 0.160144 -0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Foot2__2__1">
+  <inertial>
+    <origin xyz="-0.0017842600017019955 -0.003089391090620397 -4.391453577168303e-07" rpy="0 0 0"/>
+    <mass value="0.0834021456021728"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.066394 0.16036 0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.066394 0.16036 0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Foot2__3__1">
+  <inertial>
+    <origin xyz="-0.0017842589214655397 -0.0030893910906204247 -4.3828854087712976e-07" rpy="0 0 0"/>
+    <mass value="0.0834021456021728"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.094898 0.16046 0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.094898 0.16046 0.163086" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Foot2__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Battery_Equivalent_1">
+  <inertial>
+    <origin xyz="-1.2234305279615376e-15 0.015 2.0089749969407594e-17" rpy="0 0 0"/>
+    <mass value="0.2472749999999999"/>
+    <inertia ixx="3.7e-05" iyy="4.4e-05" izz="4.4e-05" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0 -0.005 -0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Battery_Equivalent_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.005 -0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Battery_Equivalent_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___7__1">
+  <inertial>
+    <origin xyz="-0.015000004935544639 0.02136722760493247 -0.014816384609988853" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="-1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.114902 -0.003245 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___7__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.114902 -0.003245 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___7__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___8__1">
+  <inertial>
+    <origin xyz="0.015000004935348914 -0.02136722760493235 -0.014816384609988853" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.046702 -0.041245 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___8__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.046702 -0.041245 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___8__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___3__1">
+  <inertial>
+    <origin xyz="-0.015000006015780984 0.021367227604932346 -0.014816385466805332" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="-1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.046742 -0.002945 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.046742 -0.002945 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___4__1">
+  <inertial>
+    <origin xyz="0.015000003855112576 -0.0213672276049324 -0.014816385466805443" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.114942 -0.040945 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___4__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.114942 -0.040945 -0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___4__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___1__1">
+  <inertial>
+    <origin xyz="-0.01499999614488743 0.021367227604932357 0.01481638358925913" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.04675 -0.002945 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.04675 -0.002945 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___2__1">
+  <inertial>
+    <origin xyz="0.014999993984219043 -0.02136722732181034 0.01481638358925913" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="-1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.11495 -0.040945 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.11495 -0.040945 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___5__1">
+  <inertial>
+    <origin xyz="-0.014999995064651037 0.021367227604932374 0.014816384446075886" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="1e-06" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.114542 -0.002845 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___5__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.114542 -0.002845 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___5__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Dynamixel_AX12a__1___6__1">
+  <inertial>
+    <origin xyz="0.014999995064455422 -0.02136722732181031 0.014816384446075886" rpy="0 0 0"/>
+    <mass value="0.0546"/>
+    <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="-1e-06" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.046342 -0.040845 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___6__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.046342 -0.040845 0.148236" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___6__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Hip_servos_holder_1">
+  <inertial>
+    <origin xyz="0.02169999879313715 -0.02234992858154677 0.05768838825507094" rpy="0 0 0"/>
+    <mass value="0.3518809301811295"/>
+    <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.1025 -0.0448 0.0575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.1025 -0.0448 0.0575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Hip_servos_holder__1__1">
+  <inertial>
+    <origin xyz="-0.021700000126626456 -0.02234992858154675 -0.05731161088811228" rpy="0 0 0"/>
+    <mass value="0.3518809301811295"/>
+    <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.1025 -0.0448 -0.0575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.1025 -0.0448 -0.0575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1">
+  <inertial>
+    <origin xyz="-0.0003580000073393347 0.012495000006632898 -0.07768476738935479" rpy="0 0 0"/>
+    <mass value="0.34281196365463973"/>
+    <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1">
+  <inertial>
+    <origin xyz="0.0014019999998956673 0.01289508354636731 0.07793641610141674" rpy="0 0 0"/>
+    <mass value="0.33902049366492826"/>
+    <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0794 -0.00935 -0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0794 -0.00935 -0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Thigh_and_Tibia_Motor_Left_Box_1">
+  <inertial>
+    <origin xyz="0.00135799891965932 0.012595083546367278 0.07793641524459999" rpy="0 0 0"/>
+    <mass value="0.33902049366492826"/>
+    <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0822 -0.00935 -0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0822 -0.00935 -0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Robot_Thigh_and_Tibia_Motor_Right_Box_1">
+  <inertial>
+    <origin xyz="-5.000108757576005e-05 0.012595000006632873 -0.07768476824617163" rpy="0 0 0"/>
+    <mass value="0.34281196365463973"/>
+    <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Rigid 5" type="fixed">
+  <origin xyz="0.0381 -0.03695 0.098828" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder_1"/>
+  <child link="Dynamixel_AX12a_1"/>
+</joint>
+
+<joint name="Rigid 6" type="fixed">
+  <origin xyz="0.0053 -0.00695 0.016172" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder_1"/>
+  <child link="Dynamixel_AX12a__1__1"/>
+</joint>
+
+<joint name="Rigid 7" type="fixed">
+  <origin xyz="-0.0053 -0.03695 -0.016172" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder__1__1"/>
+  <child link="Dynamixel_AX12a__2__1"/>
+</joint>
+
+<joint name="Rigid 8" type="fixed">
+  <origin xyz="-0.0053 -0.03695 -0.098828" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder__1__1"/>
+  <child link="Dynamixel_AX12a__3__1"/>
+</joint>
+
+<joint name="Revolute 13" type="revolute">
+  <origin xyz="0.019358 0.026995 0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
+  <child link="Robot_Dog_femur__3__1"/>
+  <axis xyz="0.0 -0.0 -1.0"/>
+  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 14" type="revolute">
+  <origin xyz="0.019402 0.027295 0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
+  <child link="Robot_Dog_femur_1"/>
+  <axis xyz="-0.0 -0.0 -1.0"/>
+  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 15" type="revolute">
+  <origin xyz="0.01795 0.026995 -0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
+  <child link="Robot_Dog_femur__2__1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 16" type="revolute">
+  <origin xyz="0.017642 0.026895 -0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
+  <child link="Robot_Dog_femur__1__1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 17" type="continuous">
+  <origin xyz="0.054898 -0.094919 -0.002" rpy="0 0 0"/>
+  <parent link="Robot_Dog_femur__2__1"/>
+  <child link="Robot_Dog_TIBIA_1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+</joint>
+
+<joint name="Revolute 18" type="continuous">
+  <origin xyz="0.054898 -0.094919 -0.002" rpy="0 0 0"/>
+  <parent link="Robot_Dog_femur__1__1"/>
+  <child link="Robot_Dog_TIBIA__1__1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+</joint>
+
+<joint name="Revolute 21" type="continuous">
+  <origin xyz="0.054753 -0.095003 0.002" rpy="0 0 0"/>
+  <parent link="Robot_Dog_femur__3__1"/>
+  <child link="Robot_Dog_Tibia_Another__1__1"/>
+  <axis xyz="-0.0 -0.0 -1.0"/>
+</joint>
+
+<joint name="Revolute 22" type="continuous">
+  <origin xyz="0.054753 -0.095003 0.002" rpy="0 0 0"/>
+  <parent link="Robot_Dog_femur_1"/>
+  <child link="Robot_Dog_Tibia_Another_1"/>
+  <axis xyz="-0.0 -0.0 -1.0"/>
+</joint>
+
+<joint name="Revolute 24" type="revolute">
+  <origin xyz="-0.016598 -0.001505 0.108508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
+  <child link="Robot_Dog_Knee_Motor_to_Link_Joint__1__1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 25" type="revolute">
+  <origin xyz="-0.018358 -0.001905 -0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
+  <child link="Robot_Dog_Knee_Motor_to_Link_Joint__2__1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 26" type="revolute">
+  <origin xyz="-0.01805 -0.001805 -0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
+  <child link="Robot_Dog_Knee_Motor_to_Link_Joint__3__1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 27" type="revolute">
+  <origin xyz="-0.016642 -0.001805 0.110508" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
+  <child link="Robot_Dog_Knee_Motor_to_Link_Joint_1"/>
+  <axis xyz="0.0 -0.0 -1.0"/>
+  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Rigid 28" type="fixed">
+  <origin xyz="-0.01607 -0.019151 0.007" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Knee_Motor_to_Link_Joint_1"/>
+  <child link="Robot_Dog_Tibia_Hip_Link_1"/>
+</joint>
+
+<joint name="Rigid 29" type="fixed">
+  <origin xyz="-0.01607 -0.019151 0.007" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Knee_Motor_to_Link_Joint__1__1"/>
+  <child link="Robot_Dog_Tibia_Hip_Link__1__1"/>
+</joint>
+
+<joint name="Rigid 30" type="fixed">
+  <origin xyz="-0.01607 -0.019151 -0.007" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Knee_Motor_to_Link_Joint__3__1"/>
+  <child link="Robot_Dog_Tibia_Hip_Link__2__1"/>
+</joint>
+
+<joint name="Rigid 31" type="fixed">
+  <origin xyz="-0.01607 -0.019151 -0.007" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Knee_Motor_to_Link_Joint__2__1"/>
+  <child link="Robot_Dog_Tibia_Hip_Link__3__1"/>
+</joint>
+
+<joint name="Rigid 32" type="fixed">
+  <origin xyz="-0.058443 -0.101786 0.00775" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Tibia_Another__1__1"/>
+  <child link="Foot2_1"/>
+</joint>
+
+<joint name="Rigid 33" type="fixed">
+  <origin xyz="-0.058443 -0.101786 0.00775" rpy="0 0 0"/>
+  <parent link="Robot_Dog_Tibia_Another_1"/>
+  <child link="Foot2__1__1"/>
+</joint>
+
+<joint name="Rigid 34" type="fixed">
+  <origin xyz="-0.058442 -0.101786 -0.00775" rpy="0 0 0"/>
+  <parent link="Robot_Dog_TIBIA_1"/>
+  <child link="Foot2__2__1"/>
+</joint>
+
+<joint name="Rigid 35" type="fixed">
+  <origin xyz="-0.058442 -0.101786 -0.00775" rpy="0 0 0"/>
+  <parent link="Robot_Dog_TIBIA__1__1"/>
+  <child link="Foot2__3__1"/>
+</joint>
+
+<joint name="Rigid 36" type="fixed">
+  <origin xyz="0.0 0.005 0.0" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Battery_Equivalent_1"/>
+</joint>
+
+<joint name="Rigid 37" type="fixed">
+  <origin xyz="0.035502 -0.006105 0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
+  <child link="Dynamixel_AX12a__1___7__1"/>
+</joint>
+
+<joint name="Rigid 38" type="fixed">
+  <origin xyz="-0.032698 0.031895 0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
+  <child link="Dynamixel_AX12a__1___8__1"/>
+</joint>
+
+<joint name="Rigid 39" type="fixed">
+  <origin xyz="0.035458 -0.006405 0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
+  <child link="Dynamixel_AX12a__1___3__1"/>
+</joint>
+
+<joint name="Rigid 40" type="fixed">
+  <origin xyz="-0.032742 0.031595 0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
+  <child link="Dynamixel_AX12a__1___4__1"/>
+</joint>
+
+<joint name="Rigid 41" type="fixed">
+  <origin xyz="0.03405 -0.006405 -0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
+  <child link="Dynamixel_AX12a__1___1__1"/>
+</joint>
+
+<joint name="Rigid 42" type="fixed">
+  <origin xyz="-0.03415 0.031595 -0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
+  <child link="Dynamixel_AX12a__1___2__1"/>
+</joint>
+
+<joint name="Rigid 43" type="fixed">
+  <origin xyz="0.033742 -0.006505 -0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
+  <child link="Dynamixel_AX12a__1___5__1"/>
+</joint>
+
+<joint name="Rigid 44" type="fixed">
+  <origin xyz="-0.034458 0.031495 -0.105408" rpy="0 0 0"/>
+  <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
+  <child link="Dynamixel_AX12a__1___6__1"/>
+</joint>
+
+<joint name="Rigid 45" type="fixed">
+  <origin xyz="-0.1025 0.0448 -0.0575" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Hip_servos_holder_1"/>
+</joint>
+
+<joint name="Rigid 46" type="fixed">
+  <origin xyz="0.1025 0.0448 0.0575" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Hip_servos_holder__1__1"/>
+</joint>
+
+<joint name="Revolute 48" type="revolute">
+  <origin xyz="-0.0217 -0.03545 -0.100328" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder__1__1"/>
+  <child link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 49" type="revolute">
+  <origin xyz="-0.0231 -0.03545 -0.014672" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder__1__1"/>
+  <child link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 50" type="revolute">
+  <origin xyz="0.0203 -0.03545 0.100328" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder_1"/>
+  <child link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 51" type="revolute">
+  <origin xyz="0.0217 -0.03545 0.014672" rpy="0 0 0"/>
+  <parent link="Hip_servos_holder_1"/>
+  <child link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+</joint>
+
+</robot>
