@@ -31,35 +31,28 @@ def generate_launch_description():
         name='joint_state_publisher'
     )
 
-    gazebo_server = IncludeLaunchDescription(
+    # Replaced gazebo_ros with ros_gz_sim for ROS 2 Jazzy
+    gazebo_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
-                FindPackageShare('gazebo_ros'),
+                FindPackageShare('ros_gz_sim'),
                 'launch',
-                'gzserver.launch.py'
+                'gz_sim.launch.py'
             ])
         ]),
-        launch_arguments={
-            'pause': 'true'
-        }.items()
+        # Just passing empty.sdf without '-r' ensures it starts paused!
+        launch_arguments={'gz_args': '-r empty.sdf'}.items(),
     )
 
-    gazebo_client = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare('gazebo_ros'),
-                'launch',
-                'gzclient.launch.py'
-            ])
-        ])
-    )
-
+    # Replaced spawn_entity.py with 'create' for Gazebo Sim
     urdf_spawn_node = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
+        package='ros_gz_sim',
+        executable='create',
         arguments=[
-            '-entity', 'Robot',
-            '-topic', 'robot_description'
+            '-name', 'Robot',
+            '-topic', 'robot_description',
+            '-z', '0.6',  # Spawns the robot 0.6 meters in the air
+            '-R', '1.5708'  # <--- THIS ROTATES THE WHOLE ROBOT 90 DEGREES ON SPAWN
         ],
         output='screen'
     )
@@ -67,7 +60,6 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher_node,
         joint_state_publisher_node,
-        gazebo_server,
-        gazebo_client,
+        gazebo_sim,
         urdf_spawn_node,
     ])
