@@ -4,6 +4,7 @@
 <xacro:include filename="$(find Robot_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find Robot_description)/urdf/Robot.trans" />
 <xacro:include filename="$(find Robot_description)/urdf/Robot.gazebo" />
+
 <link name="base_link">
   <inertial>
     <origin xyz="1.4662269187703477e-05 0.011546280503874469 -1.4215711144037172e-05" rpy="0 0 0"/>
@@ -32,14 +33,14 @@
     <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="-0.0" iyz="-0.0" ixz="1e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.080400 0.022850 0.075328" rpy="-3.141593 1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.080400 0.022850 0.075328" rpy="-3.141593 1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -53,14 +54,14 @@
     <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="0.0" iyz="-0.0" ixz="-1e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.081200 0.022850 -0.075328" rpy="0.000000 -1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.081200 0.022850 -0.075328" rpy="0.000000 -1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -74,14 +75,14 @@
     <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="-0.0" iyz="0.0" ixz="-1e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.081200 0.022850 0.075328" rpy="0.000000 1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.081200 0.022850 0.075328" rpy="0.000000 1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -95,14 +96,14 @@
     <inertia ixx="8.2e-05" iyy="9.8e-05" izz="5.4e-05" ixy="0.0" iyz="0.0" ixz="1e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.081200 0.022850 -0.075328" rpy="3.141593 -1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.081200 0.022850 -0.075328" rpy="3.141593 -1.570796 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -116,14 +117,14 @@
     <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.023294 -0.046310 0.173336" rpy="-1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.023294 -0.046310 0.173336" rpy="-1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -137,14 +138,14 @@
     <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.138350 -0.046010 0.173336" rpy="-1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.138350 -0.046010 0.173336" rpy="-1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -158,14 +159,14 @@
     <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.011043 -0.039232 -0.173336" rpy="1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.011043 -0.039232 -0.173336" rpy="1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -179,14 +180,14 @@
     <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.150249 -0.039332 -0.173336" rpy="1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.150249 -0.039332 -0.173336" rpy="1.570796 0.000000 2.094395"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_femur__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -200,14 +201,14 @@
     <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.026786 -0.085078 -0.155336" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.026786 -0.085078 -0.155336" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -221,14 +222,14 @@
     <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.134506 -0.085178 -0.155336" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.134506 -0.085178 -0.155336" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_TIBIA__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -242,14 +243,14 @@
     <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.026924 -0.085162 0.170836" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.026924 -0.085162 0.170836" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -263,14 +264,14 @@
     <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.134720 -0.084862 0.170836" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.134720 -0.084862 0.170836" rpy="-1.570796 0.000000 1.047198"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Another_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -284,14 +285,14 @@
     <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.028428 -0.033149 0.152836" rpy="1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.028428 -0.033149 0.152836" rpy="1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -305,14 +306,14 @@
     <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.028040 -0.033525 -0.154836" rpy="-1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0.028040 -0.033525 -0.154836" rpy="-1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -326,14 +327,14 @@
     <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.09885 -0.007545 0.153336" rpy="0 0 0"/>
+    <origin xyz="-0.133252 -0.033425 -0.154836" rpy="-1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.09885 -0.007545 0.153336" rpy="0 0 0"/>
+    <origin xyz="-0.133252 -0.033425 -0.154836" rpy="-1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -347,14 +348,14 @@
     <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.098842 -0.007545 -0.153336" rpy="0 0 0"/>
+    <origin xyz="-0.133216 -0.033449 0.154836" rpy="1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.098842 -0.007545 -0.153336" rpy="0 0 0"/>
+    <origin xyz="-0.133216 -0.033449 0.154836" rpy="1.570796 0.000000 0.872665"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Knee_Motor_to_Link_Joint_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -368,14 +369,14 @@
     <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.114912 0.011606 -0.160336" rpy="0 0 0"/>
+    <origin xyz="-0.071587 -0.049411 0.160336" rpy="1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.114912 0.011606 -0.160336" rpy="0 0 0"/>
+    <origin xyz="-0.071587 -0.049411 0.160336" rpy="1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -389,14 +390,14 @@
     <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.046732 0.011306 -0.158336" rpy="0 0 0"/>
+    <origin xyz="0.090057 -0.049111 0.158336" rpy="1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.046732 0.011306 -0.158336" rpy="0 0 0"/>
+    <origin xyz="0.090057 -0.049111 0.158336" rpy="1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -410,14 +411,14 @@
     <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.11492 0.011606 0.160336" rpy="0 0 0"/>
+    <origin xyz="-0.075043 -0.053032 -0.160336" rpy="-1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.11492 0.011606 0.160336" rpy="0 0 0"/>
+    <origin xyz="-0.075043 -0.053032 -0.160336" rpy="-1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -431,14 +432,14 @@
     <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.046372 0.011706 0.160336" rpy="0 0 0"/>
+    <origin xyz="0.086249 -0.053132 -0.160336" rpy="-1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.046372 0.011706 0.160336" rpy="0 0 0"/>
+    <origin xyz="0.086249 -0.053132 -0.160336" rpy="-1.570796 0.000000 -0.760964"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Dog_Tibia_Hip_Link__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -452,14 +453,14 @@
     <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.066532 0.160444 -0.163086" rpy="0 0 0"/>
+    <origin xyz="-0.067532 -0.162176 0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.066532 0.160444 -0.163086" rpy="0 0 0"/>
+    <origin xyz="-0.067532 -0.162176 0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -473,14 +474,14 @@
     <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.095112 0.160144 -0.163086" rpy="0 0 0"/>
+    <origin xyz="0.094112 -0.161876 0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.095112 0.160144 -0.163086" rpy="0 0 0"/>
+    <origin xyz="0.094112 -0.161876 0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -494,14 +495,14 @@
     <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.066394 0.16036 0.163086" rpy="0 0 0"/>
+    <origin xyz="-0.067394 -0.162092 -0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.066394 0.16036 0.163086" rpy="0 0 0"/>
+    <origin xyz="-0.067394 -0.162092 -0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -515,14 +516,14 @@
     <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.094898 0.16046 0.163086" rpy="0 0 0"/>
+    <origin xyz="0.093898 -0.162192 -0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.094898 0.16046 0.163086" rpy="0 0 0"/>
+    <origin xyz="0.093898 -0.162192 -0.163086" rpy="0.000000 0.000000 -0.523599"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Foot2__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -536,14 +537,14 @@
     <inertia ixx="3.7e-05" iyy="4.4e-05" izz="4.4e-05" ixy="0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.0 -0.005 -0.0" rpy="0 0 0"/>
+    <origin xyz="0.000000 -0.005000 -0.000000" rpy="0 0 0"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Battery_Equivalent_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.0 -0.005 -0.0" rpy="0 0 0"/>
+    <origin xyz="0.000000 -0.005000 -0.000000" rpy="0 0 0"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Battery_Equivalent_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -557,14 +558,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="-1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.114902 -0.003245 -0.148236" rpy="0 0 0"/>
+    <origin xyz="0.099902 0.037245 0.132236" rpy="0.000000 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___7__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.114902 -0.003245 -0.148236" rpy="0 0 0"/>
+    <origin xyz="0.099902 0.037245 0.132236" rpy="0.000000 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___7__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -578,14 +579,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.046702 -0.041245 -0.148236" rpy="0 0 0"/>
+    <origin xyz="0.061702 0.007245 0.132236" rpy="0.000000 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___8__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.046702 -0.041245 -0.148236" rpy="0 0 0"/>
+    <origin xyz="0.061702 0.007245 0.132236" rpy="0.000000 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___8__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -599,14 +600,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="-1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.046742 -0.002945 -0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.061742 0.036945 0.132236" rpy="0.000000 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.046742 -0.002945 -0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.061742 0.036945 0.132236" rpy="0.000000 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -620,14 +621,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="0.0" iyz="1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.114942 -0.040945 -0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.099942 0.006945 0.132236" rpy="0.000000 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___4__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.114942 -0.040945 -0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.099942 0.006945 0.132236" rpy="0.000000 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___4__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -641,14 +642,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.04675 -0.002945 0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.061750 0.036945 -0.132236" rpy="3.141593 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.04675 -0.002945 0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.061750 0.036945 -0.132236" rpy="3.141593 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -662,14 +663,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="-1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.11495 -0.040945 0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.099950 0.006945 -0.132236" rpy="-3.141593 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.11495 -0.040945 0.148236" rpy="0 0 0"/>
+    <origin xyz="-0.099950 0.006945 -0.132236" rpy="-3.141593 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -683,14 +684,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="1e-06" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.114542 -0.002845 0.148236" rpy="0 0 0"/>
+    <origin xyz="0.099542 0.036845 -0.132236" rpy="3.141593 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___5__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.114542 -0.002845 0.148236" rpy="0 0 0"/>
+    <origin xyz="0.099542 0.036845 -0.132236" rpy="3.141593 0.000000 -1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___5__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -704,14 +705,14 @@
     <inertia ixx="9.8e-05" iyy="5.4e-05" izz="8.2e-05" ixy="-0.0" iyz="-1e-06" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.046342 -0.040845 0.148236" rpy="0 0 0"/>
+    <origin xyz="0.061342 0.006845 -0.132236" rpy="-3.141593 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___6__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.046342 -0.040845 0.148236" rpy="0 0 0"/>
+    <origin xyz="0.061342 0.006845 -0.132236" rpy="-3.141593 0.000000 1.570796"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Dynamixel_AX12a__1___6__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -725,14 +726,14 @@
     <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.1025 -0.0448 0.0575" rpy="0 0 0"/>
+    <origin xyz="-0.080800 0.006600 -0.005000" rpy="0.000000 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.1025 -0.0448 0.0575" rpy="0 0 0"/>
+    <origin xyz="-0.080800 0.006600 -0.005000" rpy="0.000000 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -746,14 +747,14 @@
     <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.1025 -0.0448 -0.0575" rpy="0 0 0"/>
+    <origin xyz="0.080800 0.006600 -0.005000" rpy="0.000000 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.1025 -0.0448 -0.0575" rpy="0 0 0"/>
+    <origin xyz="0.080800 0.006600 -0.005000" rpy="0.000000 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Hip_servos_holder__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -767,14 +768,14 @@
     <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <origin xyz="0.089692 0.021845 -0.064336" rpy="-1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <origin xyz="0.089692 0.021845 -0.064336" rpy="-1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -788,14 +789,14 @@
     <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.0794 -0.00935 -0.042828" rpy="0 0 0"/>
+    <origin xyz="0.105052 0.022245 0.064336" rpy="1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.0794 -0.00935 -0.042828" rpy="0 0 0"/>
+    <origin xyz="0.105052 0.022245 0.064336" rpy="1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -809,14 +810,14 @@
     <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.0822 -0.00935 -0.042828" rpy="0 0 0"/>
+    <origin xyz="-0.071600 0.021945 -0.064336" rpy="-1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.0822 -0.00935 -0.042828" rpy="0 0 0"/>
+    <origin xyz="-0.071600 0.021945 -0.064336" rpy="-1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Left_Box_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -830,14 +831,14 @@
     <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <origin xyz="-0.056592 0.021945 0.064336" rpy="1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin xyz="0.0808 -0.00935 0.042828" rpy="0 0 0"/>
+    <origin xyz="-0.056592 0.021945 0.064336" rpy="1.570796 0.000000 0.000000"/>
     <geometry>
       <mesh filename="file://$(find Robot_description)/meshes/Robot_Thigh_and_Tibia_Motor_Right_Box_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
