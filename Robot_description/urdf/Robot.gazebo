@@ -153,29 +153,29 @@
 
 <gazebo reference="Foot2_1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>1.5</mu1>
+  <mu2>1.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="Foot2__1__1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>1.5</mu1>
+  <mu2>1.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="Foot2__2__1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>1.5</mu1>
+  <mu2>1.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="Foot2__3__1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>1.5</mu1>
+  <mu2>1.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 

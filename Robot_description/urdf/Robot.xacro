@@ -1106,4 +1106,11 @@
   <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
 </joint>
 
+<link name="world"/>
+<joint name="fixed_to_world" type="fixed">
+  <parent link="world"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 2" rpy="0 0 0"/> 
+</joint>
+
 </robot>
