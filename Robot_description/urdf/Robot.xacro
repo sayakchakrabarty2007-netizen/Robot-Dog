@@ -874,6 +874,7 @@
   <child link="Robot_Dog_femur__3__1"/>
   <axis xyz="0.0 -0.0 -1.0"/>
   <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 14" type="revolute">
@@ -882,6 +883,7 @@
   <child link="Robot_Dog_femur_1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
   <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 15" type="revolute">
@@ -890,6 +892,7 @@
   <child link="Robot_Dog_femur__2__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
   <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 16" type="revolute">
@@ -898,34 +901,43 @@
   <child link="Robot_Dog_femur__1__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
   <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
-<joint name="Revolute 17" type="continuous">
+<joint name="Revolute 17" type="revolute">
   <origin xyz="0.054898 -0.094919 -0.002" rpy="0 0 0"/>
   <parent link="Robot_Dog_femur__2__1"/>
   <child link="Robot_Dog_TIBIA_1"/>
   <axis xyz="0.0 -0.0 1.0"/>
+  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
-<joint name="Revolute 18" type="continuous">
+<joint name="Revolute 18" type="revolute">
   <origin xyz="0.054898 -0.094919 -0.002" rpy="0 0 0"/>
   <parent link="Robot_Dog_femur__1__1"/>
   <child link="Robot_Dog_TIBIA__1__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
+  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
-<joint name="Revolute 21" type="continuous">
+<joint name="Revolute 21" type="revolute">
   <origin xyz="0.054753 -0.095003 0.002" rpy="0 0 0"/>
   <parent link="Robot_Dog_femur__3__1"/>
   <child link="Robot_Dog_Tibia_Another__1__1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
+  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
-<joint name="Revolute 22" type="continuous">
+<joint name="Revolute 22" type="revolute">
   <origin xyz="0.054753 -0.095003 0.002" rpy="0 0 0"/>
   <parent link="Robot_Dog_femur_1"/>
   <child link="Robot_Dog_Tibia_Another_1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
+  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 24" type="revolute">
@@ -934,6 +946,7 @@
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__1__1"/>
   <axis xyz="0.0 0.0 1.0"/>
   <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 25" type="revolute">
@@ -942,6 +955,7 @@
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__2__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
   <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 26" type="revolute">
@@ -950,6 +964,7 @@
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__3__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
   <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 27" type="revolute">
@@ -958,6 +973,7 @@
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint_1"/>
   <axis xyz="0.0 -0.0 -1.0"/>
   <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Rigid 28" type="fixed">
@@ -1080,6 +1096,7 @@
   <child link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
   <axis xyz="-1.0 0.0 0.0"/>
   <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 49" type="revolute">
@@ -1088,6 +1105,7 @@
   <child link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
   <axis xyz="-1.0 0.0 0.0"/>
   <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 50" type="revolute">
@@ -1096,6 +1114,7 @@
   <child link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
   <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
 <joint name="Revolute 51" type="revolute">
@@ -1104,13 +1123,110 @@
   <child link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
   <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
-<link name="world"/>
-<joint name="fixed_to_world" type="fixed">
-  <parent link="world"/>
-  <child link="base_link"/>
-  <origin xyz="0 0 2" rpy="0 0 0"/> 
-</joint>
+<ros2_control name="RobotDogSystem" type="system">
+  <hardware>
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+  </hardware>
+  <!-- Replace the joint names below if they differ from your actual URDF joint names -->
+  <joint name="Revolute 48">
+    <command_interface name="position"><param name="min">-0.698132</param><param name="max">0.698132</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 49">
+    <command_interface name="position"><param name="min">-0.698132</param><param name="max">0.698132</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 50">
+    <command_interface name="position"><param name="min">-0.698132</param><param name="max">0.698132</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 51">
+    <command_interface name="position"><param name="min">-0.698132</param><param name="max">0.698132</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 13">
+    <command_interface name="position"><param name="min">-0.523599</param><param name="max">0.523599</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 14">
+    <command_interface name="position"><param name="min">-0.523599</param><param name="max">0.523599</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 15">
+    <command_interface name="position"><param name="min">-0.523599</param><param name="max">0.523599</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 16">
+    <command_interface name="position"><param name="min">-0.523599</param><param name="max">0.523599</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 17">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 18">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 21">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 22">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 24">
+    <command_interface name="position"><param name="min">-1.396263</param><param name="max">1.396263</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 25">
+    <command_interface name="position"><param name="min">-1.396263</param><param name="max">1.396263</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 26">
+    <command_interface name="position"><param name="min">-1.396263</param><param name="max">1.396263</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Revolute 27">
+    <command_interface name="position"><param name="min">-1.396263</param><param name="max">1.396263</param></command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+</ros2_control>
 
 </robot>

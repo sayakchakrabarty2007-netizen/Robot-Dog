@@ -3,6 +3,15 @@
 
 <xacro:property name="body_color" value="Gazebo/Silver" />
 
+<gazebo>
+  <plugin filename="gz_ros2_control-system"
+          name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <parameters>$(find Robot_description)/config/controllers.yaml</parameters>
+    <robot_param>robot_description</robot_param>
+    <robot_param_node>robot_state_publisher</robot_param_node>
+  </plugin>
+</gazebo>
+
 <gazebo reference="base_link">
   <material>${body_color}</material>
   <mu1>0.2</mu1>

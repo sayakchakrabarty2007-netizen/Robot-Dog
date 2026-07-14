@@ -1,0 +1,36 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sim_time: true
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - 'Revolute 48'
+      - 'Revolute 49'
+      - 'Revolute 50'
+      - 'Revolute 51'
+      - 'Revolute 13'
+      - 'Revolute 14'
+      - 'Revolute 15'
+      - 'Revolute 16'
+      - 'Revolute 17'
+      - 'Revolute 18'
+      - 'Revolute 21'
+      - 'Revolute 22'
+      - 'Revolute 24'
+      - 'Revolute 25'
+      - 'Revolute 26'
+      - 'Revolute 27'
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 50.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: true

@@ -40,8 +40,7 @@ def generate_launch_description():
                 'gz_sim.launch.py'
             ])
         ]),
-        # Just passing empty.sdf without '-r' ensures it starts paused!
-        launch_arguments={'gz_args': '-r empty.sdf'}.items(),
+        launch_arguments={'gz_args': '-r -v 4 empty.sdf'}.items(),
     )
 
     # Replaced spawn_entity.py with 'create' for Gazebo Sim
@@ -57,9 +56,23 @@ def generate_launch_description():
         output='screen'
     )
 
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    )
+
+    joint_trajectory_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_trajectory_controller", "--controller-manager", "/controller_manager"],
+    )
+
     return LaunchDescription([
         robot_state_publisher_node,
         joint_state_publisher_node,
         gazebo_sim,
         urdf_spawn_node,
+        joint_state_broadcaster_spawner,
+        joint_trajectory_controller_spawner,
     ])
