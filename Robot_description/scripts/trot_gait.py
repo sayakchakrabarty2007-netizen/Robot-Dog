@@ -1,423 +1,466 @@
 #!/usr/bin/env python3
 """
-Trot Gait Controller for 12-DOF Quadruped Robot
-================================================
-Phase 2: Inverse Kinematics (geometric 2-link IK)
-Phase 3: Gait Generator (trot pattern with body pitch compensation)
+trot_gait.py — Combined forward + rotation state machine
 
-Usage:
-  # Terminal 1 — Launch Gazebo:
-  ros2 launch Robot_description gazebo.launch.py
+Sequences the robot through a demo path:
+  1. Walk FORWARD for FORWARD_DURATION seconds
+  2. Turn LEFT 90°  (IMU-measured)
+  3. Walk FORWARD for FORWARD_DURATION seconds
+  4. Turn RIGHT 90° (IMU-measured)
+  5. Walk FORWARD for FORWARD_DURATION seconds
+  6. Stop (standing pose)
 
-  # Terminal 2 — Stand first, then trot:
-  python3 trot_gait.py --stand          # hold standing pose
-  python3 trot_gait.py --trot           # start trotting
-  python3 trot_gait.py --trot-in-place  # trot without forward movement
+Runs until the sequence completes or Ctrl+C is pressed.
+
+SETUP:
+  ros2 run ros_gz_bridge parameter_bridge /imu/data@sensor_msgs/msg/Imu[gz.msgs.IMU
 """
+
 import rclpy
 from rclpy.node import Node
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from sensor_msgs.msg import Imu
 from builtin_interfaces.msg import Duration
 import math
-import sys
 import time
+import sys
+import os
 
-# ================================================================
-# SECTION 1: ROBOT DIMENSIONS (measured from URDF joint origins)
-# ================================================================
-# Femur link: from hip-pitch pivot to knee pivot
-#   URDF Rev 17 origin relative to femur parent: (0.054898, -0.094919, -0.002)
-#   Effective 2D length in sagittal plane:
-FEMUR_LENGTH = math.sqrt(0.054898**2 + 0.094919**2)  # = 0.1097 m
-
-# Tibia link: from knee pivot to foot contact
-#   Estimated from tibia CoM position and visual extents
-TIBIA_LENGTH = 0.100  # = 0.100 m
-
-# At URDF joint angle 0, the femur already tilts forward from vertical by:
-#   atan2(forward_offset, downward_offset) = atan2(0.055, 0.095)
-FEMUR_REST_ANGLE = math.atan2(0.054898, 0.094919)  # ≈ 0.524 rad (30°)
+# Add the scripts directory to path so we can import leg_kinematics
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from leg_kinematics import leg_ik_to_command, LEGS, FEMUR_LENGTH, TIBIA_LENGTH
 
 
-# ================================================================
-# SECTION 2: GAIT PARAMETERS (all tunable)
-# ================================================================
-# Standing foot position relative to hip (computed from FK at angle 0,0)
-STAND_X = FEMUR_LENGTH * math.sin(FEMUR_REST_ANGLE) + \
-          TIBIA_LENGTH * math.sin(FEMUR_REST_ANGLE)  # ≈ 0.105 m forward
-STAND_Z = FEMUR_LENGTH * math.cos(FEMUR_REST_ANGLE) + \
-          TIBIA_LENGTH * math.cos(FEMUR_REST_ANGLE)  # ≈ 0.182 m down
+# ======================= TUNABLE PARAMETERS ========================
+CYCLE_PERIOD = 0.6            # full trot cycle, seconds
+CONTROL_RATE_HZ = 50.0        # Hz — trajectory update rate
+SETTLE_TIME = 1.0             # seconds to hold standing pose at start
+BLEND_DURATION = 2.0          # seconds to ramp gait amplitudes from 0→full
 
-# Gait geometry
-STEP_HEIGHT  = 0.025    # 25 mm foot lift during swing phase
-STEP_LENGTH  = 0.035    # 35 mm forward per step (total stride = 2x)
-CYCLE_TIME   = 1.0      # 1.0 second per full gait cycle
-PITCH_COMP   = 0.010    # 10 mm backward body lean for front-leg stability
-RAMP_CYCLES  = 3        # Gradually increase step height over first N cycles
+# --- Forward gait parameters ---
+STRIDE_LENGTH = 0.04          # fore/aft travel of foot (meters)
+STEP_HEIGHT   = 0.015         # foot lift height during swing (meters)
+STANCE_Z_HEIGHT = -0.220      # standing leg height (straighter legs = less torque needed)
+BASE_HIP_SPRAWL = 0.025       # outward splay for wide stance (meters)
+BODY_SHIFT_Y = 0.010          # shifts body left by 10mm to take weight off right legs
+ROLL_OFFSET = 0.005           # Z-height offset: + extends right legs / shortens left legs to fix right-tilt
 
-# Plate-to-knee coupling ratio (1.0 = plate follows knee 1:1)
-PLATE_COUPLING = 1.0
+# --- Forward IMU Yaw PD Controller ---
+YAW_KP = 0.1                 # proportional gain
+YAW_KD = 0.02                # derivative gain
+YAW_MAX_CORRECTION = 0.15    # max differential steering clamp
+
+# --- Rotation gait parameters ---
+ROTATION_STRIDE = 0.08        # how far each foot moves per step along its arc
+
+# --- State machine timing ---
+FORWARD_DURATION = 5.0        # seconds of forward walking per segment
+TURN_ANGLE = math.radians(90) # target turn angle (90°)
+TURN_TOLERANCE = math.radians(5)  # how close to target before declaring turn complete
+TRANSITION_PAUSE = 0.5        # seconds to pause (standing) between state transitions
+# ===================================================================
 
 
-# ================================================================
-# SECTION 3: JOINT MAP (verified by user testing on 2026-07-14)
-# ================================================================
-# Joint order must match controllers.yaml
-ALL_JOINT_NAMES = [
-    'Revolute 48', 'Revolute 49', 'Revolute 50', 'Revolute 51',  # hips
-    'Revolute 13', 'Revolute 14', 'Revolute 15', 'Revolute 16',  # femurs
-    'Revolute 17', 'Revolute 18', 'Revolute 21', 'Revolute 22',  # knees
-    'Revolute 24', 'Revolute 25', 'Revolute 26', 'Revolute 27',  # plates
-]
+# Diagonal pair phase offsets
+TROT_OFFSETS = {'FL': 0.0, 'BR': 0.0, 'FR': 0.5, 'BL': 0.5}
 
-# Per-leg configuration: (joint_name, sign_multiplier)
-# sign_multiplier converts canonical direction → URDF direction
-# Canonical: +forward for femur/knee, +outward for hip
-#
-# Verified directions:
-#   Rev 48 BR hip:   + inside  - outside  → sign = -1 (canonical outward = URDF -)
-#   Rev 49 BL hip:   - inside  + outside  → sign = +1
-#   Rev 50 FL hip:   - inside  + outside  → sign = +1
-#   Rev 51 FR hip:   + inside  - outside  → sign = -1
-#   Rev 13 FL femur: + forward - backward → sign = +1
-#   Rev 14 BL femur: + forward - backward → sign = +1
-#   Rev 15 FR femur: - forward + backward → sign = -1
-#   Rev 16 BR femur: - forward + backward → sign = -1
-#   Rev 17 FR knee:  - forward + backward → sign = -1
-#   Rev 18 BR knee:  - forward + backward → sign = -1
-#   Rev 21 FL knee:  + forward - backward → sign = +1
-#   Rev 22 BL knee:  + forward - backward → sign = +1
-#   Rev 24 BL plate: - forward + backward → sign = -1
-#   Rev 25 BR plate: - forward + backward → sign = -1
-#   Rev 26 FR plate: - forward + backward → sign = -1
-#   Rev 27 FL plate: + forward - backward → sign = +1
+# Leg groups
+LEFT_LEGS  = {'FL', 'BL'}
+RIGHT_LEGS = {'FR', 'BR'}
 
-LEG_CONFIG = {
-    #        hip_joint,       hip_sign, femur_joint,     fem_sign, knee_joint,      knee_sign, plate_joint,     plate_sign
-    'FR': (('Revolute 51',   -1),      ('Revolute 15',  -1),      ('Revolute 17',  -1),       ('Revolute 26',  -1)),
-    'FL': (('Revolute 50',   +1),      ('Revolute 13',  +1),      ('Revolute 21',  +1),       ('Revolute 27',  +1)),
-    'BR': (('Revolute 48',   -1),      ('Revolute 16',  -1),      ('Revolute 18',  -1),       ('Revolute 25',  -1)),
-    'BL': (('Revolute 49',   +1),      ('Revolute 14',  +1),      ('Revolute 22',  +1),       ('Revolute 24',  -1)),
+# Hip positions relative to robot center (body frame: X=forward, Y=left)
+HIP_BODY_POS = {
+    'FL': ( 0.082,  0.043),
+    'FR': ( 0.080, -0.043),
+    'BL': (-0.080,  0.043),
+    'BR': (-0.082, -0.043),
 }
 
+# State machine states
+STATE_SETTLE     = 'SETTLE'
+STATE_FORWARD_1  = 'FORWARD_1'
+STATE_PAUSE_1    = 'PAUSE_1'
+STATE_TURN_LEFT  = 'TURN_LEFT'
+STATE_PAUSE_2    = 'PAUSE_2'
+STATE_FORWARD_2  = 'FORWARD_2'
+STATE_PAUSE_3    = 'PAUSE_3'
+STATE_TURN_RIGHT = 'TURN_RIGHT'
+STATE_PAUSE_4    = 'PAUSE_4'
+STATE_FORWARD_3  = 'FORWARD_3'
+STATE_DONE       = 'DONE'
 
-# ================================================================
-# SECTION 4: INVERSE KINEMATICS (2-link geometric)
-# ================================================================
-def clamp(val, lo, hi):
-    return max(lo, min(hi, val))
+
+# ------------ Utility functions -------------------
+
+def smoothstep(t):
+    t = max(0.0, min(1.0, t))
+    return t * t * (3.0 - 2.0 * t)
+
+def smoother_step(t):
+    t = max(0.0, min(1.0, t))
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0)
+
+def soft_bell(frac):
+    return math.sin(math.pi * frac) ** 2
+
+def quaternion_to_yaw(x, y, z, w):
+    siny = 2.0 * (w * z + x * y)
+    cosy = 1.0 - 2.0 * (y * y + z * z)
+    return math.atan2(siny, cosy)
+
+def normalize_angle(angle):
+    while angle > math.pi:
+        angle -= 2.0 * math.pi
+    while angle < -math.pi:
+        angle += 2.0 * math.pi
+    return angle
 
 
-def ik_leg(foot_x, foot_z):
+# ------------ Unicycle model: per-leg tangent directions ---
+
+def compute_leg_tangents(turn_sign):
     """
-    Compute hip-pitch (femur) and knee angles for a desired foot position.
-
-    Coordinate frame (per leg, relative to hip-pitch pivot):
-        +x = forward       (the direction the robot walks)
-        +z = downward       (toward the ground)
-
-    At URDF angle (0, 0), the foot is at (STAND_X, STAND_Z).
-
-    Args:
-        foot_x: desired foot forward offset from hip (m)
-        foot_z: desired foot downward offset from hip (m, positive = lower)
-
-    Returns:
-        (femur_angle, knee_angle) in CANONICAL convention:
-            femur_angle: + = swing leg forward from rest
-            knee_angle:  0 = straight (aligned with femur), - = bend backward
+    Compute normalized stride direction for each leg in leg-local frame.
+    turn_sign: +1 for left (CCW), -1 for right (CW).
     """
-    L1, L2 = FEMUR_LENGTH, TIBIA_LENGTH
-
-    # Distance from hip to desired foot position
-    d = math.sqrt(foot_x**2 + foot_z**2)
-    d = clamp(d, abs(L1 - L2) + 0.001, L1 + L2 - 0.001)  # stay in workspace
-
-    # --- Knee angle (interior angle via law of cosines) ---
-    cos_beta = (L1**2 + L2**2 - d**2) / (2.0 * L1 * L2)
-    cos_beta = clamp(cos_beta, -1.0, 1.0)
-    beta = math.acos(cos_beta)          # interior angle at knee joint
-    knee_angle = -(math.pi - beta)      # 0 = straight, negative = bent backward
-
-    # --- Femur angle (law of cosines at hip) ---
-    cos_alpha = (L1**2 + d**2 - L2**2) / (2.0 * L1 * d)
-    cos_alpha = clamp(cos_alpha, -1.0, 1.0)
-    alpha = math.acos(cos_alpha)        # angle at hip between femur and line-to-foot
-
-    gamma = math.atan2(foot_x, foot_z)  # angle from vertical to foot target
-
-    # Knee-forward configuration (dog-leg): femur is ABOVE the line to foot
-    phi = gamma + alpha                 # absolute femur angle from vertical
-    femur_angle = phi - FEMUR_REST_ANGLE  # relative to rest orientation
-
-    return femur_angle, knee_angle
-
-
-def fk_leg(femur_angle, knee_angle):
-    """
-    Forward kinematics: joint angles → foot position.
-    Useful for verification.
-    """
-    L1, L2 = FEMUR_LENGTH, TIBIA_LENGTH
-    phi = FEMUR_REST_ANGLE + femur_angle   # absolute femur angle
-    psi = phi + knee_angle                 # absolute tibia angle
-
-    foot_x = L1 * math.sin(phi) + L2 * math.sin(psi)
-    foot_z = L1 * math.cos(phi) + L2 * math.cos(psi)
-    return foot_x, foot_z
-
-
-# ================================================================
-# SECTION 5: GAIT TRAJECTORY GENERATOR
-# ================================================================
-class TrotGait:
-    """
-    Trot gait: diagonal leg pairs move together.
-
-    Full cycle (phase 0→1):
-        Phase A (0.0 – 0.5): FR + BL swing;  FL + BR stance
-        Phase B (0.5 – 1.0): FL + BR swing;  FR + BL stance
-
-    Swing trajectory: semi-elliptical arc (foot lifts, advances, lowers)
-    Stance trajectory: foot pushes backward on the ground
-    """
-
-    def __init__(self, step_height=STEP_HEIGHT, step_length=STEP_LENGTH,
-                 stand_x=STAND_X, stand_z=STAND_Z, pitch_comp=PITCH_COMP):
-        self.step_height = step_height
-        self.step_length = step_length
-        self.stand_x = stand_x
-        self.stand_z = stand_z
-        self.pitch_comp = pitch_comp
-
-    def get_foot_targets(self, phase):
-        """
-        Returns {leg_name: (foot_x, foot_z)} for all 4 legs at given phase.
-        phase: 0.0 → 1.0 (one full gait cycle)
-        """
-        targets = {}
-
-        if phase < 0.5:
-            # --- Phase A: FR+BL swing, FL+BR stance ---
-            t = phase / 0.5                   # 0→1 within this half-cycle
-
-            targets['FR'] = self._swing(t)
-            targets['BL'] = self._swing(t)
-            targets['FL'] = self._stance(t, is_front=True)
-            targets['BR'] = self._stance(t, is_front=False)
+    tangents = {}
+    for leg, (rx, ry) in HIP_BODY_POS.items():
+        tang_x_body = -turn_sign * ry
+        tang_y_body = turn_sign * rx
+        tx = tang_x_body
+        if leg in LEFT_LEGS:
+            ty = tang_y_body
         else:
-            # --- Phase B: FL+BR swing, FR+BL stance ---
-            t = (phase - 0.5) / 0.5
-
-            targets['FL'] = self._swing(t)
-            targets['BR'] = self._swing(t)
-            targets['FR'] = self._stance(t, is_front=True)
-            targets['BL'] = self._stance(t, is_front=False)
-
-        return targets
-
-    def _swing(self, t):
-        """
-        Swing trajectory: foot lifts from behind, arcs forward, places down in front.
-
-        t=0: foot is at the BACK of the stride (just finished stance)
-        t=1: foot is at the FRONT of the stride (about to touch down)
-
-        Path: x linear, z sinusoidal lift
-        """
-        x = self.stand_x - self.step_length / 2.0 + self.step_length * t
-        z = self.stand_z - self.step_height * math.sin(math.pi * t)
-        return (x, z)
-
-    def _stance(self, t, is_front=False):
-        """
-        Stance trajectory: foot stays on ground and pushes backward.
-
-        t=0: foot is at the FRONT (just touched down)
-        t=1: foot is at the BACK (about to lift off)
-
-        Body pitch compensation: front stance legs shift forward to
-        lean the body backward, preventing forward tipping when the
-        diagonal front leg is in the air.
-        """
-        x = self.stand_x + self.step_length / 2.0 - self.step_length * t
-
-        # Apply pitch compensation to the front stance leg
-        if is_front:
-            x += self.pitch_comp
-
-        z = self.stand_z
-        return (x, z)
+            ty = -tang_y_body
+        mag = math.sqrt(tx**2 + ty**2)
+        tangents[leg] = (tx / mag, ty / mag)
+    return tangents
 
 
-# ================================================================
-# SECTION 6: ROS 2 CONTROLLER NODE
-# ================================================================
-class DogController(Node):
+# Precompute tangent directions for both turn directions
+TANGENTS_LEFT  = compute_leg_tangents(+1)
+TANGENTS_RIGHT = compute_leg_tangents(-1)
+
+
+# ------------ Foot trajectory generators -------------------
+
+def compute_forward_foot(phase_01):
+    """Forward gait foot trajectory."""
+    half_stride = STRIDE_LENGTH / 2.0
+
+    if phase_01 < 0.5:
+        frac = phase_01 / 0.5
+        x = -half_stride + STRIDE_LENGTH * smoother_step(frac)
+        z = STANCE_Z_HEIGHT + STEP_HEIGHT * soft_bell(frac)
+        is_swing = True
+    else:
+        frac = (phase_01 - 0.5) / 0.5
+        x = half_stride - STRIDE_LENGTH * smoother_step(frac)
+        z = STANCE_Z_HEIGHT + 0.005 * math.sin(math.pi * frac)
+        is_swing = False
+
+    return x, 0.0, z, is_swing
+
+
+def compute_rotation_foot(phase_01, tang_x, tang_y):
+    """Rotation gait foot trajectory along tangent arc."""
+    half_stride = ROTATION_STRIDE / 2.0
+
+    if phase_01 < 0.5:
+        frac = phase_01 / 0.5
+        progress = -1.0 + 2.0 * smoother_step(frac)
+        x = tang_x * half_stride * progress
+        y = tang_y * half_stride * progress
+        z = STANCE_Z_HEIGHT + STEP_HEIGHT * soft_bell(frac)
+        is_swing = True
+    else:
+        frac = (phase_01 - 0.5) / 0.5
+        progress = 1.0 - 2.0 * smoother_step(frac)
+        x = tang_x * half_stride * progress
+        y = tang_y * half_stride * progress
+        z = STANCE_Z_HEIGHT + 0.005 * math.sin(math.pi * frac)
+        is_swing = False
+
+    return x, y, z, is_swing
+
+
+# -------------------------------------------------------------------
+
+class TrotGaitNode(Node):
     def __init__(self):
-        super().__init__('dog_controller')
+        super().__init__('trot_gait_node')
 
-        self.pub = self.create_publisher(
+        # --- Publishers ---
+        self.publisher_ = self.create_publisher(
             JointTrajectory,
             '/joint_trajectory_controller/joint_trajectory',
             10
         )
 
-        # Determine mode from command line
-        self.mode = 'stand'
-        if '--trot' in sys.argv:
-            self.mode = 'trot'
-        elif '--trot-in-place' in sys.argv:
-            self.mode = 'trot-in-place'
+        # --- IMU Subscriber ---
+        self.imu_sub = self.create_subscription(
+            Imu, '/imu/data', self.imu_callback, 10
+        )
 
-        self.gait = TrotGait()
-        if self.mode == 'trot-in-place':
-            self.gait.step_length = 0.0  # no forward movement
+        self.start_time = time.time()
+        self.timer = self.create_timer(1.0 / CONTROL_RATE_HZ, self.tick)
 
-        self.phase = 0.0
-        self.cycle_count = 0
-        self.dt = 0.02  # 50 Hz control loop
+        # Joint order
+        self.joint_order = [
+            'Revolute 48', 'Revolute 49', 'Revolute 50', 'Revolute 51',
+            'Revolute 13', 'Revolute 14', 'Revolute 15', 'Revolute 16',
+            'Revolute 17', 'Revolute 18', 'Revolute 21', 'Revolute 22',
+        ]
 
-        self.get_logger().info(f"=== Dog Controller [{self.mode}] ===")
-        self.get_logger().info(f"  Femur length:   {FEMUR_LENGTH*1000:.1f} mm")
-        self.get_logger().info(f"  Tibia length:   {TIBIA_LENGTH*1000:.1f} mm")
-        self.get_logger().info(f"  Standing foot:  ({STAND_X*1000:.1f}, {STAND_Z*1000:.1f}) mm")
-        self.get_logger().info(f"  Step height:    {STEP_HEIGHT*1000:.1f} mm")
-        self.get_logger().info(f"  Step length:    {self.gait.step_length*1000:.1f} mm")
-        self.get_logger().info(f"  Cycle time:     {CYCLE_TIME:.2f} s")
-        self.get_logger().info(f"  Pitch comp:     {PITCH_COMP*1000:.1f} mm")
-        self.get_logger().info("Waiting 2s for controllers...")
+        self.blend_factor = 0.0
 
-        # Delay start to let Gazebo controllers initialize
-        self.create_timer(2.0, self._on_ready, callback_group=None)
-        self._started = False
+        # --- IMU State ---
+        self.current_yaw = 0.0
+        self.target_yaw = None
+        self.prev_yaw_error = 0.0
+        self.imu_received = False
+        self.yaw_correction = 0.0
 
-    def _on_ready(self):
-        if self._started:
+        # --- State Machine ---
+        self.state = STATE_SETTLE
+        self.state_start_time = time.time()
+        self.gait_time_offset = 0.0   # continuous gait clock for smooth phase
+        self.turn_start_yaw = 0.0     # yaw at the start of a turn
+
+        self.get_logger().info(
+            f"Combined trot gait started: forward={FORWARD_DURATION}s segments, "
+            f"turns=90°, stride={STRIDE_LENGTH}m, rotation_stride={ROTATION_STRIDE}m"
+        )
+        self.get_logger().info("Waiting for IMU data on /imu/data ...")
+
+    def imu_callback(self, msg: Imu):
+        q = msg.orientation
+        self.current_yaw = quaternion_to_yaw(q.x, q.y, q.z, q.w)
+        if not self.imu_received:
+            self.imu_received = True
+            self.get_logger().info(
+                f"IMU data received! Initial yaw = {math.degrees(self.current_yaw):.1f}°"
+            )
+
+    def transition_to(self, new_state):
+        """Transition to a new state, resetting the state timer."""
+        self.get_logger().info(f"State: {self.state} → {new_state}")
+        self.state = new_state
+        self.state_start_time = time.time()
+        self.prev_yaw_error = 0.0
+
+        # When entering a FORWARD state, lock the current yaw as the heading target
+        if new_state.startswith('FORWARD'):
+            self.target_yaw = self.current_yaw
+            self.get_logger().info(
+                f"  Heading locked: {math.degrees(self.target_yaw):.1f}°"
+            )
+
+        # When entering a TURN state, record the starting yaw
+        if new_state.startswith('TURN'):
+            self.turn_start_yaw = self.current_yaw
+            self.get_logger().info(
+                f"  Turn starting from yaw: {math.degrees(self.turn_start_yaw):.1f}°"
+            )
+
+    def state_elapsed(self):
+        """Time elapsed since entering the current state."""
+        return time.time() - self.state_start_time
+
+    def tick(self):
+        t = time.time() - self.start_time
+
+        # ======== STATE MACHINE ========
+
+        if self.state == STATE_SETTLE:
+            self.publish_standing_pose()
+            if t >= SETTLE_TIME:
+                if not self.imu_received:
+                    self.get_logger().error("CRITICAL: NO IMU DATA RECEIVED! The IMU bridge is not running.")
+                    self.get_logger().error("Turns will use a time-based fallback instead of measuring 90 degrees.")
+                self.transition_to(STATE_FORWARD_1)
             return
-        self._started = True
 
-        if self.mode == 'stand':
-            self.get_logger().info("Sending STANDING pose (all joints = 0)...")
-            self._send_all_zeros()
-            self.get_logger().info("Done! Robot should be standing stiff.")
-            self.get_logger().info("To trot:  python3 trot_gait.py --trot")
-        else:
-            self.get_logger().info("Sending standing pose first...")
-            self._send_all_zeros()
-            time.sleep(1.5)
-            self.get_logger().info("Starting gait loop!")
-            self.gait_timer = self.create_timer(self.dt, self._tick)
+        elif self.state == STATE_FORWARD_1:
+            self.tick_forward()
+            if self.state_elapsed() >= FORWARD_DURATION:
+                self.transition_to(STATE_PAUSE_1)
 
-    # ---- Gait loop (called at 50 Hz) ----
-    def _tick(self):
-        # Ramp up step height over the first few cycles
-        ramp = min(1.0, self.cycle_count / max(1, RAMP_CYCLES))
-        self.gait.step_height = STEP_HEIGHT * ramp
+        elif self.state == STATE_PAUSE_1:
+            self.publish_standing_pose()
+            if self.state_elapsed() >= TRANSITION_PAUSE:
+                self.transition_to(STATE_TURN_LEFT)
 
-        # Get foot targets from gait generator
-        targets = self.gait.get_foot_targets(self.phase)
-
-        # Build joint angle dictionary
-        angles = {}
-        for leg_name, (foot_x, foot_z) in targets.items():
-            # --- IK ---
-            femur_can, knee_can = ik_leg(foot_x, foot_z)
-
-            # --- Map to URDF joints ---
-            (hip_j, hip_s), (fem_j, fem_s), (knee_j, knee_s), (plate_j, plate_s) = LEG_CONFIG[leg_name]
-
-            angles[hip_j]   = 0.0                              # no lateral roll for trot
-            angles[fem_j]   = femur_can * fem_s                # femur
-            angles[knee_j]  = knee_can  * knee_s               # knee (tibia)
-            angles[plate_j] = knee_can  * PLATE_COUPLING * plate_s  # plate follows knee
-
-        self._publish(angles)
-
-        # Advance phase
-        self.phase += self.dt / CYCLE_TIME
-        if self.phase >= 1.0:
-            self.phase -= 1.0
-            self.cycle_count += 1
-            if self.cycle_count <= RAMP_CYCLES:
+        elif self.state == STATE_TURN_LEFT:
+            self.tick_rotate(+1, TANGENTS_LEFT)
+            turned = normalize_angle(self.current_yaw - self.turn_start_yaw)
+            if abs(turned) >= TURN_ANGLE - TURN_TOLERANCE or self.state_elapsed() > 8.0:
                 self.get_logger().info(
-                    f"Cycle {self.cycle_count}: step_height ramping "
-                    f"({self.gait.step_height*1000:.0f}/{STEP_HEIGHT*1000:.0f} mm)"
+                    f"  Left turn complete! Turned {math.degrees(turned):.1f}°"
                 )
+                self.transition_to(STATE_PAUSE_2)
 
-    # ---- Helpers ----
-    def _send_all_zeros(self):
-        self._publish({name: 0.0 for name in ALL_JOINT_NAMES})
+        elif self.state == STATE_PAUSE_2:
+            self.publish_standing_pose()
+            if self.state_elapsed() >= TRANSITION_PAUSE:
+                self.transition_to(STATE_FORWARD_2)
 
-    def _publish(self, angles_dict):
+        elif self.state == STATE_FORWARD_2:
+            self.tick_forward()
+            if self.state_elapsed() >= FORWARD_DURATION:
+                self.transition_to(STATE_PAUSE_3)
+
+        elif self.state == STATE_PAUSE_3:
+            self.publish_standing_pose()
+            if self.state_elapsed() >= TRANSITION_PAUSE:
+                self.transition_to(STATE_TURN_RIGHT)
+
+        elif self.state == STATE_TURN_RIGHT:
+            self.tick_rotate(-1, TANGENTS_RIGHT)
+            turned = normalize_angle(self.current_yaw - self.turn_start_yaw)
+            if abs(turned) >= TURN_ANGLE - TURN_TOLERANCE or self.state_elapsed() > 8.0:
+                self.get_logger().info(
+                    f"  Right turn complete! Turned {math.degrees(turned):.1f}°"
+                )
+                self.transition_to(STATE_PAUSE_4)
+
+        elif self.state == STATE_PAUSE_4:
+            self.publish_standing_pose()
+            if self.state_elapsed() >= TRANSITION_PAUSE:
+                self.transition_to(STATE_FORWARD_3)
+
+        elif self.state == STATE_FORWARD_3:
+            self.tick_forward()
+            if self.state_elapsed() >= FORWARD_DURATION:
+                self.transition_to(STATE_DONE)
+
+        elif self.state == STATE_DONE:
+            self.publish_standing_pose()
+
+    # ---- Forward walking tick ----
+
+    def tick_forward(self):
+        gait_t = self.state_elapsed()
+        self.blend_factor = smoothstep(min(1.0, gait_t / BLEND_DURATION))
+
+        # IMU PD yaw controller (keep heading straight)
+        if self.imu_received and self.target_yaw is not None:
+            yaw_error = normalize_angle(self.current_yaw - self.target_yaw)
+            dt = 1.0 / CONTROL_RATE_HZ
+            d_error = (yaw_error - self.prev_yaw_error) / dt
+            correction = YAW_KP * yaw_error + YAW_KD * d_error
+            self.prev_yaw_error = yaw_error
+            correction = max(-YAW_MAX_CORRECTION, min(YAW_MAX_CORRECTION, correction))
+            self.yaw_correction = correction
+        else:
+            self.yaw_correction = 0.0
+
+        global_phase = (gait_t % CYCLE_PERIOD) / CYCLE_PERIOD
+
+        commands = {}
+        for leg_name in LEGS:
+            local_phase = (global_phase + TROT_OFFSETS[leg_name]) % 1.0
+            x, y, z, is_swing = compute_forward_foot(local_phase)
+
+            # IMU yaw correction via hip lateral shift
+            dynamic_body_shift = BODY_SHIFT_Y + (self.yaw_correction * 0.1)
+            if leg_name in LEFT_LEGS:
+                y += BASE_HIP_SPRAWL - dynamic_body_shift
+            else:
+                y += BASE_HIP_SPRAWL + dynamic_body_shift
+
+            # Blend
+            x_b = x * self.blend_factor
+            y_b = y * self.blend_factor
+            z_b = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
+
+            try:
+                leg_commands = leg_ik_to_command(leg_name, x_b, y_b, z_b)
+                commands.update(leg_commands)
+            except ValueError as e:
+                self.get_logger().warn(
+                    f"IK unreachable for {leg_name}: {e}",
+                    throttle_duration_sec=2.0
+                )
+                continue
+
+        self.publish_commands(commands)
+
+    # ---- Rotation tick ----
+
+    def tick_rotate(self, turn_sign, tangents):
+        gait_t = self.state_elapsed()
+        self.blend_factor = smoothstep(min(1.0, gait_t / BLEND_DURATION))
+
+        global_phase = (gait_t % CYCLE_PERIOD) / CYCLE_PERIOD
+
+        commands = {}
+        for leg_name in LEGS:
+            local_phase = (global_phase + TROT_OFFSETS[leg_name]) % 1.0
+            tang_x, tang_y = tangents[leg_name]
+            x, y, z, is_swing = compute_rotation_foot(local_phase, tang_x, tang_y)
+
+            # Add sprawl
+            y += BASE_HIP_SPRAWL
+
+            # Blend
+            x_b = x * self.blend_factor
+            y_b = y * self.blend_factor
+            z_b = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
+
+            try:
+                leg_commands = leg_ik_to_command(leg_name, x_b, y_b, z_b)
+                commands.update(leg_commands)
+            except ValueError as e:
+                self.get_logger().warn(
+                    f"IK unreachable for {leg_name}: {e}",
+                    throttle_duration_sec=2.0
+                )
+                continue
+
+        self.publish_commands(commands)
+
+        # Log yaw progress
+        if self.imu_received:
+            turned = normalize_angle(self.current_yaw - self.turn_start_yaw)
+            direction = "LEFT" if turn_sign > 0 else "RIGHT"
+            self.get_logger().info(
+                f"  Turning {direction}: {math.degrees(turned):.1f}° / "
+                f"{math.degrees(TURN_ANGLE):.0f}° target",
+                throttle_duration_sec=1.0
+            )
+
+    # ---- Shared helpers ----
+
+    def publish_standing_pose(self):
+        commands = {}
+        for leg_name in LEGS:
+            y = BASE_HIP_SPRAWL
+            try:
+                leg_commands = leg_ik_to_command(leg_name, 0.0, y, STANCE_Z_HEIGHT)
+                commands.update(leg_commands)
+            except ValueError:
+                pass
+        self.publish_commands(commands)
+
+    def publish_commands(self, commands):
         msg = JointTrajectory()
-        msg.joint_names = list(ALL_JOINT_NAMES)
-
-        pt = JointTrajectoryPoint()
-        pt.positions = [angles_dict.get(n, 0.0) for n in ALL_JOINT_NAMES]
-        pt.time_from_start = Duration(sec=0, nanosec=100_000_000)  # 100 ms
-        msg.points.append(pt)
-
-        self.pub.publish(msg)
-
-
-# ================================================================
-# SECTION 7: SELF-TEST & MAIN
-# ================================================================
-def self_test():
-    """Verify IK/FK roundtrip before launching ROS."""
-    print("=" * 60)
-    print("  IK / FK Self-Test")
-    print("=" * 60)
-
-    # Test 1: Standing position should give (0, 0) angles
-    f, k = ik_leg(STAND_X, STAND_Z)
-    fx, fz = fk_leg(f, k)
-    print(f"  Standing foot target: ({STAND_X*1000:.1f}, {STAND_Z*1000:.1f}) mm")
-    print(f"  IK angles:  femur={math.degrees(f):+.2f}°  knee={math.degrees(k):+.2f}°")
-    print(f"  FK verify:  ({fx*1000:.1f}, {fz*1000:.1f}) mm")
-    assert abs(f) < 0.01 and abs(k) < 0.01, "Standing IK failed!"
-    print("  ✓ Standing roundtrip OK\n")
-
-    # Test 2: Swing peak (foot lifted and forward)
-    sx = STAND_X + STEP_LENGTH / 2
-    sz = STAND_Z - STEP_HEIGHT
-    f, k = ik_leg(sx, sz)
-    fx, fz = fk_leg(f, k)
-    print(f"  Swing peak target:   ({sx*1000:.1f}, {sz*1000:.1f}) mm")
-    print(f"  IK angles:  femur={math.degrees(f):+.2f}°  knee={math.degrees(k):+.2f}°")
-    print(f"  FK verify:  ({fx*1000:.1f}, {fz*1000:.1f}) mm")
-    err = math.sqrt((fx - sx)**2 + (fz - sz)**2)
-    assert err < 0.001, f"Swing IK error too large: {err*1000:.2f} mm"
-    print("  ✓ Swing roundtrip OK\n")
-
-    # Test 3: Stance rear (foot pushed backward)
-    bx = STAND_X - STEP_LENGTH / 2
-    bz = STAND_Z
-    f, k = ik_leg(bx, bz)
-    fx, fz = fk_leg(f, k)
-    print(f"  Stance rear target:  ({bx*1000:.1f}, {bz*1000:.1f}) mm")
-    print(f"  IK angles:  femur={math.degrees(f):+.2f}°  knee={math.degrees(k):+.2f}°")
-    print(f"  FK verify:  ({fx*1000:.1f}, {fz*1000:.1f}) mm")
-    err = math.sqrt((fx - bx)**2 + (fz - bz)**2)
-    assert err < 0.001, f"Stance IK error too large: {err*1000:.2f} mm"
-    print("  ✓ Stance roundtrip OK\n")
-
-    print("  All self-tests PASSED!")
-    print("=" * 60)
+        msg.joint_names = list(self.joint_order)
+        point = JointTrajectoryPoint()
+        point.positions = [commands.get(name, 0.0) for name in self.joint_order]
+        dt_ns = int(1e9 / CONTROL_RATE_HZ * 2)
+        point.time_from_start = Duration(sec=0, nanosec=dt_ns)
+        msg.points.append(point)
+        self.publisher_.publish(msg)
 
 
-def main():
-    self_test()
-    print()
-
-    rclpy.init()
-    node = DogController()
-
+def main(args=None):
+    rclpy.init(args=args)
+    node = TrotGaitNode()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        node.get_logger().info("Shutting down...")
+        pass
     finally:
         node.destroy_node()
         if rclpy.ok():

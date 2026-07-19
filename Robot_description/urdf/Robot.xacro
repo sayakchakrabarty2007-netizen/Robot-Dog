@@ -7,8 +7,8 @@
 <link name="base_link">
   <inertial>
     <origin xyz="1.4662269187703477e-05 0.011546280503874469 -1.4215711144037172e-05" rpy="0 0 0"/>
-    <mass value="1.9509833561659489"/>
-    <inertia ixx="0.003469" iyy="0.015592" izz="0.012814" ixy="0.0" iyz="-0.0" ixz="2e-06"/>
+    <mass value="0.390197"/>
+    <inertia ixx="0.0006938" iyy="0.0031184" izz="0.0025628" ixy="0" iyz="-0" ixz="4e-07"/>
   </inertial>
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -112,8 +112,8 @@
 <link name="Robot_Dog_femur__3__1">
   <inertial>
     <origin xyz="0.022425811828788486 -0.03892583161584007 0.009692501970942596" rpy="0 0 0"/>
-    <mass value="0.1686419756554846"/>
-    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
+    <mass value="0.033728"/>
+    <inertia ixx="3.42e-05" iyy="1.5e-05" izz="4.48e-05" ixy="1.66e-05" iyz="6e-07" ixz="-4e-07"/>
   </inertial>
   <visual>
     <origin xyz="0.039548 -0.082655 0.020000" rpy="-1.570796 0.000000 2.094395"/>
@@ -133,8 +133,8 @@
 <link name="Robot_Dog_femur_1">
   <inertial>
     <origin xyz="0.022425812909024873 -0.03892583161584007 0.009692502827759242" rpy="0 0 0"/>
-    <mass value="0.1686419756554846"/>
-    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="3e-06" ixz="-2e-06"/>
+    <mass value="0.033728"/>
+    <inertia ixx="3.42e-05" iyy="1.5e-05" izz="4.48e-05" ixy="1.66e-05" iyz="6e-07" ixz="-4e-07"/>
   </inertial>
   <visual>
     <origin xyz="0.039548 -0.082655 0.020000" rpy="-1.570796 0.000000 2.094395"/>
@@ -154,8 +154,8 @@
 <link name="Robot_Dog_femur__2__1">
   <inertial>
     <origin xyz="0.022497851507857408 -0.03888423948773731 -0.00969250384848891" rpy="0 0 0"/>
-    <mass value="0.1686419756554846"/>
-    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
+    <mass value="0.033728"/>
+    <inertia ixx="3.42e-05" iyy="1.5e-05" izz="4.48e-05" ixy="1.66e-05" iyz="-6e-07" ixz="4e-07"/>
   </inertial>
   <visual>
     <origin xyz="0.051807 -0.075577 -0.020000" rpy="1.570796 -0.000000 2.094395"/>
@@ -175,8 +175,8 @@
 <link name="Robot_Dog_femur__1__1">
   <inertial>
     <origin xyz="0.022497852588093767 -0.03888423948773728 -0.009692502991672153" rpy="0 0 0"/>
-    <mass value="0.1686419756554846"/>
-    <inertia ixx="0.000171" iyy="7.5e-05" izz="0.000224" ixy="8.3e-05" iyz="-3e-06" ixz="2e-06"/>
+    <mass value="0.033728"/>
+    <inertia ixx="3.42e-05" iyy="1.5e-05" izz="4.48e-05" ixy="1.66e-05" iyz="-6e-07" ixz="4e-07"/>
   </inertial>
   <visual>
     <origin xyz="0.051807 -0.075577 -0.020000" rpy="1.570796 -0.000000 2.094395"/>
@@ -196,8 +196,8 @@
 <link name="Robot_Dog_TIBIA_1">
   <inertial>
     <origin xyz="-0.02477098826948545 -0.04518985831866687 -0.007607417226580426" rpy="0 0 0"/>
-    <mass value="0.24073976661793736"/>
-    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
+    <mass value="0.048148"/>
+    <inertia ixx="3.44e-05" iyy="1.38e-05" izz="4.62e-05" ixy="-1.9e-05" iyz="-2e-07" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.018835 -0.026504 -0.000000" rpy="-1.570796 -0.000000 1.047198"/>
@@ -217,8 +217,8 @@
 <link name="Robot_Dog_TIBIA__1__1">
   <inertial>
     <origin xyz="-0.024770987189249027 -0.04518985831866685 -0.007607416369763614" rpy="0 0 0"/>
-    <mass value="0.24073976661793736"/>
-    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="-1e-06" ixz="0.0"/>
+    <mass value="0.048148"/>
+    <inertia ixx="3.44e-05" iyy="1.38e-05" izz="4.62e-05" ixy="-1.9e-05" iyz="-2e-07" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.018835 -0.026504 -0.000000" rpy="-1.570796 -0.000000 1.047198"/>
@@ -238,8 +238,8 @@
 <link name="Robot_Dog_Tibia_Another__1__1">
   <inertial>
     <origin xyz="-0.024803750749565832 -0.045245780605014954 0.007610469287207489" rpy="0 0 0"/>
-    <mass value="0.24063079586798816"/>
-    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
+    <mass value="0.048126"/>
+    <inertia ixx="3.44e-05" iyy="1.38e-05" izz="4.62e-05" ixy="-1.9e-05" iyz="2e-07" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.018835 -0.026504 0.015500" rpy="-1.570796 0.000000 1.047198"/>
@@ -259,8 +259,8 @@
 <link name="Robot_Dog_Tibia_Another_1">
   <inertial>
     <origin xyz="-0.024803749669329522 -0.04524578060501495 0.007610470144024134" rpy="0 0 0"/>
-    <mass value="0.24063079586798816"/>
-    <inertia ixx="0.000172" iyy="6.9e-05" izz="0.000231" ixy="-9.5e-05" iyz="1e-06" ixz="-0.0"/>
+    <mass value="0.048126"/>
+    <inertia ixx="3.44e-05" iyy="1.38e-05" izz="4.62e-05" ixy="-1.9e-05" iyz="2e-07" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.018835 -0.026504 0.015500" rpy="-1.570796 0.000000 1.047198"/>
@@ -280,8 +280,8 @@
 <link name="Robot_Dog_Knee_Motor_to_Link_Joint__1__1">
   <inertial>
     <origin xyz="-0.008503620557143196 -0.009759814247963558 0.004174865661029398" rpy="0 0 0"/>
-    <mass value="0.009074878535242492"/>
-    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+    <mass value="0.001815"/>
+    <inertia ixx="0" iyy="0" izz="2e-07" ixy="-0" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.034374 -0.040994 0.001500" rpy="1.570796 0.000000 0.872665"/>
@@ -301,8 +301,8 @@
 <link name="Robot_Dog_Knee_Motor_to_Link_Joint__2__1">
   <inertial>
     <origin xyz="-0.008134902526149346 -0.01006920541177891 -0.0041748658249422255" rpy="0 0 0"/>
-    <mass value="0.009074878535242492"/>
-    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+    <mass value="0.001815"/>
+    <inertia ixx="0" iyy="0" izz="2e-07" ixy="-0" iyz="-0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.034402 -0.040970 -0.001500" rpy="-1.570796 -0.000000 0.872665"/>
@@ -322,8 +322,8 @@
 <link name="Robot_Dog_Knee_Motor_to_Link_Joint__3__1">
   <inertial>
     <origin xyz="-0.008134903606385746 -0.010069205411778939 -0.004174866681759093" rpy="0 0 0"/>
-    <mass value="0.009074878535242492"/>
-    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+    <mass value="0.001815"/>
+    <inertia ixx="0" iyy="0" izz="2e-07" ixy="-0" iyz="-0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.034402 -0.040970 -0.001500" rpy="-1.570796 -0.000000 0.872665"/>
@@ -343,8 +343,8 @@
 <link name="Robot_Dog_Knee_Motor_to_Link_Joint_1">
   <inertial>
     <origin xyz="-0.008503621637379555 -0.009759814247963605 0.0041748648042127245" rpy="0 0 0"/>
-    <mass value="0.009074878535242492"/>
-    <inertia ixx="0.0" iyy="0.0" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+    <mass value="0.001815"/>
+    <inertia ixx="0" iyy="0" izz="2e-07" ixy="-0" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.034374 -0.040994 0.001500" rpy="1.570796 0.000000 0.872665"/>
@@ -364,8 +364,8 @@
 <link name="Robot_Dog_Tibia_Hip_Link_1">
   <inertial>
     <origin xyz="0.0384821258495088 -0.036765030084618525 0.004000437265788498" rpy="0 0 0"/>
-    <mass value="0.07197440836980624"/>
-    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
+    <mass value="0.014395"/>
+    <inertia ixx="6.2e-06" iyy="6.8e-06" izz="1.28e-05" ixy="6e-06" iyz="-0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="0.043324 -0.037805 0.000000" rpy="1.570796 -0.000000 -0.760964"/>
@@ -385,8 +385,8 @@
 <link name="Robot_Dog_Tibia_Hip_Link__1__1">
   <inertial>
     <origin xyz="0.03848212692974514 -0.03676503008461847 0.004000438122605199" rpy="0 0 0"/>
-    <mass value="0.07197440836980624"/>
-    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="-0.0" ixz="0.0"/>
+    <mass value="0.014395"/>
+    <inertia ixx="6.2e-06" iyy="6.8e-06" izz="1.28e-05" ixy="6e-06" iyz="-0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="0.043324 -0.037805 0.000000" rpy="1.570796 -0.000000 -0.760964"/>
@@ -406,8 +406,8 @@
 <link name="Robot_Dog_Tibia_Hip_Link__2__1">
   <inertial>
     <origin xyz="0.038601163330368726 -0.03664002841539631 -0.004000439143334866" rpy="0 0 0"/>
-    <mass value="0.07197440836980624"/>
-    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.014395"/>
+    <inertia ixx="6.2e-06" iyy="6.8e-06" izz="1.28e-05" ixy="6e-06" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="0.039876 -0.041426 0.000000" rpy="-1.570796 0.000000 -0.760964"/>
@@ -427,8 +427,8 @@
 <link name="Robot_Dog_Tibia_Hip_Link__3__1">
   <inertial>
     <origin xyz="0.03860116441060513 -0.03664002841539631 -0.004000438286518027" rpy="0 0 0"/>
-    <mass value="0.07197440836980624"/>
-    <inertia ixx="3.1e-05" iyy="3.4e-05" izz="6.4e-05" ixy="3e-05" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.014395"/>
+    <inertia ixx="6.2e-06" iyy="6.8e-06" izz="1.28e-05" ixy="6e-06" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="0.039876 -0.041426 0.000000" rpy="-1.570796 0.000000 -0.760964"/>
@@ -448,8 +448,8 @@
 <link name="Foot2_1">
   <inertial>
     <origin xyz="-0.001783446323468399 -0.0030892144525749843 4.372678115149853e-07" rpy="0 0 0"/>
-    <mass value="0.0834021456021728"/>
-    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+    <mass value="0.016680"/>
+    <inertia ixx="1.6e-06" iyy="1.6e-06" izz="1.8e-06" ixy="-0" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.001000 -0.001732 0.000000" rpy="-0.000000 0.000000 -0.523599"/>
@@ -469,8 +469,8 @@
 <link name="Foot2__1__1">
   <inertial>
     <origin xyz="-0.0017834452432320264 -0.0030892144525748733 4.3812462796610774e-07" rpy="0 0 0"/>
-    <mass value="0.0834021456021728"/>
-    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+    <mass value="0.016680"/>
+    <inertia ixx="1.6e-06" iyy="1.6e-06" izz="1.8e-06" ixy="-0" iyz="-0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.001000 -0.001732 0.000000" rpy="-0.000000 0.000000 -0.523599"/>
@@ -490,8 +490,8 @@
 <link name="Foot2__2__1">
   <inertial>
     <origin xyz="-0.0017842600017019955 -0.003089391090620397 -4.391453577168303e-07" rpy="0 0 0"/>
-    <mass value="0.0834021456021728"/>
-    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+    <mass value="0.016680"/>
+    <inertia ixx="1.6e-06" iyy="1.6e-06" izz="1.8e-06" ixy="-0" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="-0.001000 -0.001732 0.000000" rpy="0.000000 0.000000 -0.523599"/>
@@ -511,8 +511,8 @@
 <link name="Foot2__3__1">
   <inertial>
     <origin xyz="-0.0017842589214655397 -0.0030893910906204247 -4.3828854087712976e-07" rpy="0 0 0"/>
-    <mass value="0.0834021456021728"/>
-    <inertia ixx="8e-06" iyy="8e-06" izz="9e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.016680"/>
+    <inertia ixx="1.6e-06" iyy="1.6e-06" izz="1.8e-06" ixy="-0" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.001000 -0.001732 0.000000" rpy="0.000000 0.000000 -0.523599"/>
@@ -721,8 +721,8 @@
 <link name="Hip_servos_holder_1">
   <inertial>
     <origin xyz="0.02169999879313715 -0.02234992858154677 0.05768838825507094" rpy="0 0 0"/>
-    <mass value="0.3518809301811295"/>
-    <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.070376"/>
+    <inertia ixx="8.54e-05" iyy="0.000103" izz="4.2e-05" ixy="0" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="0.021700 -0.038200 0.052500" rpy="0.000000 -0.000000 0.000000"/>
@@ -742,8 +742,8 @@
 <link name="Hip_servos_holder__1__1">
   <inertial>
     <origin xyz="-0.021700000126626456 -0.02234992858154675 -0.05731161088811228" rpy="0 0 0"/>
-    <mass value="0.3518809301811295"/>
-    <inertia ixx="0.000427" iyy="0.000515" izz="0.00021" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.070376"/>
+    <inertia ixx="8.54e-05" iyy="0.000103" izz="4.2e-05" ixy="0" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="-0.021700 -0.038200 -0.062500" rpy="-0.000000 -0.000000 0.000000"/>
@@ -763,8 +763,8 @@
 <link name="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1">
   <inertial>
     <origin xyz="-0.0003580000073393347 0.012495000006632898 -0.07768476738935479" rpy="0 0 0"/>
-    <mass value="0.34281196365463973"/>
-    <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.068562"/>
+    <inertia ixx="7.46e-05" iyy="9.72e-05" izz="7.84e-05" ixy="8e-07" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="0.0082 0.0134 -0.0215" rpy="-1.570796 -0.000000 -0.000000"/>
@@ -784,8 +784,8 @@
 <link name="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1">
   <inertial>
     <origin xyz="0.0014019999998956673 0.01289508354636731 0.07793641610141674" rpy="0 0 0"/>
-    <mass value="0.33902049366492826"/>
-    <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
+    <mass value="0.067804"/>
+    <inertia ixx="7.42e-05" iyy="9.64e-05" izz="7.78e-05" ixy="8e-07" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="0.0242 0.0134 0.0215" rpy="1.570796 0.000000 0.000000"/>
@@ -805,8 +805,8 @@
 <link name="Robot_Thigh_and_Tibia_Motor_Left_Box_1">
   <inertial>
     <origin xyz="0.00135799891965932 0.012595083546367278 0.07793641524459999" rpy="0 0 0"/>
-    <mass value="0.33902049366492826"/>
-    <inertia ixx="0.000371" iyy="0.000482" izz="0.000389" ixy="4e-06" iyz="0.0" ixz="0.0"/>
+    <mass value="0.067804"/>
+    <inertia ixx="7.42e-05" iyy="9.64e-05" izz="7.78e-05" ixy="8e-07" iyz="0" ixz="0"/>
   </inertial>
   <visual>
     <origin xyz="0.0265 0.0134 0.0215" rpy="1.570796 0.000000 -0.000000"/>
@@ -826,8 +826,8 @@
 <link name="Robot_Thigh_and_Tibia_Motor_Right_Box_1">
   <inertial>
     <origin xyz="-5.000108757576005e-05 0.012595000006632873 -0.07768476824617163" rpy="0 0 0"/>
-    <mass value="0.34281196365463973"/>
-    <inertia ixx="0.000373" iyy="0.000486" izz="0.000392" ixy="4e-06" iyz="0.0" ixz="-0.0"/>
+    <mass value="0.068562"/>
+    <inertia ixx="7.46e-05" iyy="9.72e-05" izz="7.84e-05" ixy="8e-07" iyz="0" ixz="-0"/>
   </inertial>
   <visual>
     <origin xyz="0.0093 0.0134 -0.0215" rpy="-1.570796 -0.000000 0.000000"/>
@@ -873,7 +873,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
   <child link="Robot_Dog_femur__3__1"/>
   <axis xyz="0.0 -0.0 -1.0"/>
-  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <limit upper="0.523599" lower="-0.523599" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -882,7 +882,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
   <child link="Robot_Dog_femur_1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
-  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <limit upper="0.523599" lower="-0.523599" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -891,7 +891,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
   <child link="Robot_Dog_femur__2__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <limit upper="0.523599" lower="-0.523599" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -900,7 +900,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
   <child link="Robot_Dog_femur__1__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+  <limit upper="0.523599" lower="-0.523599" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -909,7 +909,7 @@
   <parent link="Robot_Dog_femur__2__1"/>
   <child link="Robot_Dog_TIBIA_1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <limit lower="-2.356" upper="0.5" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -918,7 +918,7 @@
   <parent link="Robot_Dog_femur__1__1"/>
   <child link="Robot_Dog_TIBIA__1__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <limit lower="-2.356" upper="0.5" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -927,7 +927,7 @@
   <parent link="Robot_Dog_femur__3__1"/>
   <child link="Robot_Dog_Tibia_Another__1__1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
-  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <limit lower="-2.356" upper="0.5" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -936,7 +936,7 @@
   <parent link="Robot_Dog_femur_1"/>
   <child link="Robot_Dog_Tibia_Another_1"/>
   <axis xyz="-0.0 -0.0 -1.0"/>
-  <limit lower="-2.356" upper="0.5" effort="100" velocity="100"/>
+  <limit lower="-2.356" upper="0.5" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -945,7 +945,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__1__1"/>
   <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <limit upper="1.396263" lower="-1.396263" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -954,7 +954,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__2__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <limit upper="1.396263" lower="-1.396263" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -963,7 +963,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint__3__1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <limit upper="1.396263" lower="-1.396263" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -972,7 +972,7 @@
   <parent link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
   <child link="Robot_Dog_Knee_Motor_to_Link_Joint_1"/>
   <axis xyz="0.0 -0.0 -1.0"/>
-  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+  <limit upper="1.396263" lower="-1.396263" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -1028,6 +1028,37 @@
   <origin xyz="0.0 0.005 0.0" rpy="0 0 0"/>
   <parent link="base_link"/>
   <child link="Battery_Equivalent_1"/>
+</joint>
+
+<!-- ==================== IMU SENSOR LINK ==================== -->
+<!-- Small box sitting on top of the battery, centered on the chassis -->
+<link name="imu_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.01"/>
+    <inertia ixx="1e-06" iyy="1e-06" izz="1e-06" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.02 0.01 0.02"/>
+    </geometry>
+    <material name="imu_green">
+      <color rgba="0.2 0.8 0.2 1.0"/>
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.02 0.01 0.02"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="imu_joint" type="fixed">
+  <origin xyz="0.0 0.04 0.0" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="imu_link"/>
 </joint>
 
 <joint name="Rigid 37" type="fixed">
@@ -1095,7 +1126,7 @@
   <parent link="Hip_servos_holder__1__1"/>
   <child link="Robot_Thigh_and_Tibia_Motor_Right_Box__1__1"/>
   <axis xyz="-1.0 0.0 0.0"/>
-  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <limit upper="0.698132" lower="-0.698132" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -1104,7 +1135,7 @@
   <parent link="Hip_servos_holder__1__1"/>
   <child link="Robot_Thigh_and_Tibia_Motor_Left_Box__1__1"/>
   <axis xyz="-1.0 0.0 0.0"/>
-  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <limit upper="0.698132" lower="-0.698132" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -1113,7 +1144,7 @@
   <parent link="Hip_servos_holder_1"/>
   <child link="Robot_Thigh_and_Tibia_Motor_Left_Box_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
-  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <limit upper="0.698132" lower="-0.698132" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
@@ -1122,7 +1153,7 @@
   <parent link="Hip_servos_holder_1"/>
   <child link="Robot_Thigh_and_Tibia_Motor_Right_Box_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
-  <limit upper="0.698132" lower="-0.698132" effort="100" velocity="100"/>
+  <limit upper="0.698132" lower="-0.698132" effort="1.5" velocity="6.18"/>
   <dynamics damping="0.5" friction="0.1"/>
 </joint>
 
