@@ -43,16 +43,17 @@ SETTLE_TIME = 1.0             # seconds to hold standing pose before trotting
 BLEND_DURATION = 2.0          # seconds to ramp gait amplitudes from 0→full
 
 # --- Foot trajectory parameters (in meters, leg-local frame) ---
-STRIDE_LENGTH = 0.04          # total fore/aft travel of the foot (meters)
-STEP_HEIGHT   = 0.015         # how high the foot lifts during swing (meters)
-STANCE_Z_HEIGHT = -0.220      # standing leg height (straighter legs = less torque needed)
+STRIDE_LENGTH = 0.025          # total fore/aft travel of the foot (meters) - shortened to allow higher stance
+STEP_HEIGHT   = 0.025         # increased foot lift height for better ground clearance (meters)
+STANCE_Z_HEIGHT = -0.170      # MUST be bent! Max leg length is 0.227m. -0.210 causes IK to fail and fold the legs!
 BASE_HIP_SPRAWL = 0.025       # outward splay for wide stance (meters)
-BODY_SHIFT_Y = 0.010          # shifts body left by 10mm to take weight off right legs
-ROLL_OFFSET = 0.005           # Z-height offset: + extends right legs / shortens left legs to fix right-tilt
+BODY_SHIFT_Y = 0.000          # perfectly centered (no lateral shift)
+ROLL_OFFSET = 0.000           # perfectly level (no roll tilt offset)
+PITCH_OFFSET = 0.005          # tilt compensation: shortens front legs, lengthens back legs (meters)
 
-# --- IMU Yaw PD Controller Gains ---
-YAW_KP = 0.1                 # proportional gain (lowered to prevent left/right weaving)
-YAW_KD = 0.02                # derivative gain
+# --- IMU Yaw PD Controller Gains (temporarily disabled to debug tilt) ---
+YAW_KP = 0.0                 # set to 0.0 to disable feedback loop
+YAW_KD = 0.0                 # set to 0.0 to disable feedback loop
 YAW_MAX_CORRECTION = 0.15    # max differential steering clamp
 # ===================================================================
 
@@ -114,26 +115,21 @@ def compute_foot_position(phase_01):
 
     if phase_01 < 0.5:
         # --- SWING PHASE ---
-        frac = phase_01 / 0.5  # 0→1 over swing
-
-        # X: sweep from rear (-half_stride) to front (+half_stride)
-        x = -half_stride + STRIDE_LENGTH * smoother_step(frac)
-
-        # Z: lift in a smooth bell curve, peak at mid-swing
+        frac = phase_01 / 0.5
+        # Moves from front to back in +X frame (which means moving visually FORWARD if head is -X)
+        x = half_stride - STRIDE_LENGTH * smoother_step(frac)
+        
+        # z lifts up in a smooth bell curve
         z = STANCE_Z_HEIGHT + STEP_HEIGHT * soft_bell(frac)
-
         is_swing = True
+        
     else:
         # --- STANCE PHASE ---
-        frac = (phase_01 - 0.5) / 0.5  # 0→1 over stance
-
-        # X: push from front (+half_stride) to rear (-half_stride)
-        x = half_stride - STRIDE_LENGTH * smoother_step(frac)
-
-        # Z: dip slightly in the middle of stance to absorb bumping impact
-        # This mimics the STANCE_HEIGHT_COMP from the hardcoded gait
-        z = STANCE_Z_HEIGHT + 0.005 * math.sin(math.pi * frac)
-
+        # Pushes from back to front in +X frame (propels robot towards -X)
+        frac = (phase_01 - 0.5) / 0.5
+        x = -half_stride + STRIDE_LENGTH * smoother_step(frac)
+        
+        z = STANCE_Z_HEIGHT
         is_swing = False
 
     y = 0.0
@@ -257,15 +253,23 @@ class TrotGaitNode(Node):
                 y += BASE_HIP_SPRAWL + dynamic_body_shift
 
             # Blend: interpolate between standing position and gait position
-            x_blended = x * self.blend_factor
+            x_blended = -0.025 + x * self.blend_factor
             y_blended = y * self.blend_factor
             
-            # Apply Roll offset (right legs reach deeper to push body up)
+            # Compute stance Z targets (apply roll and pitch offsets)
             z_target = STANCE_Z_HEIGHT
+            
+            # Roll compensation
             if leg_name in RIGHT_LEGS:
                 z_target -= ROLL_OFFSET
             else:
                 z_target += ROLL_OFFSET
+                
+            # Pitch compensation (counteract backward tilting)
+            if leg_name in ['FL', 'FR']:
+                z_target += PITCH_OFFSET  # Front legs shorter (larger Z value, since Z is negative)
+            else:
+                z_target -= PITCH_OFFSET  # Back legs longer (smaller Z value)
                 
             z_blended = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
             if not is_swing:
@@ -296,8 +300,21 @@ class TrotGaitNode(Node):
             else:
                 y += BASE_HIP_SPRAWL + BODY_SHIFT_Y
                 
+            # Base stance Z
+            z_stand = STANCE_Z_HEIGHT
+            if leg_name in RIGHT_LEGS:
+                z_stand -= ROLL_OFFSET
+            else:
+                z_stand += ROLL_OFFSET
+                
+            if leg_name in ['FL', 'FR']:
+                z_stand += PITCH_OFFSET
+            else:
+                z_stand -= PITCH_OFFSET
+
             try:
-                leg_commands = leg_ik_to_command(leg_name, 0.0, y, STANCE_Z_HEIGHT)
+                # Shift X backwards by 2.5cm to align support polygon with CoM
+                leg_commands = leg_ik_to_command(leg_name, -0.025, y, z_stand)
                 commands.update(leg_commands)
             except ValueError:
                 pass

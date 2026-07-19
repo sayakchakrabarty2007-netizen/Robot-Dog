@@ -32,52 +32,57 @@ import math
 # ---- measured link lengths (meters) ----
 FEMUR_LENGTH = 0.1097
 TIBIA_LENGTH = 0.1174
-COXA_LENGTH = 0.0    # hip-roll-axis to femur-pitch-axis offset is small in
-                      # your design (~0.02m dominated by other axes); start
-                      # at 0 and add a real measured value later if legs
-                      # don't reach where expected.
+COXA_LENGTH = 0.027  # coxa (hip roll to hip pitch distance along Y in URDF is 0.027m)
 
 # IK configuration
 # The math yields 2 valid solutions (knee bends forward vs backward). 
-# Change this between +1.0 and -1.0 to flip the knee bend direction.
-KNEE_BEND_DIR = -1.0 
+# User requested << configuration (all knees point forward).
+KNEE_BEND_DIR = {
+    'FL': 1.0,
+    'FR': 1.0,
+    'BL': 1.0,
+    'BR': 1.0
+}
 
-# ---- per-leg joint names (from your Robot.xacro) ----
+# ---- per-leg joint names (from your# URDF joint names for each leg
+# The URDF Z axis represents Left(+)/Right(-).
+# Front holder (X=+0.1025) has Revolute 48(FR, Z=-) and 49(FL, Z=+).
+# Back holder (X=-0.1025) has Revolute 50(BL, Z=+) and 51(BR, Z=-).
 LEGS = {
-    'FL': {'hip': 'Revolute 50', 'femur': 'Revolute 13', 'knee': 'Revolute 21'},
-    'FR': {'hip': 'Revolute 51', 'femur': 'Revolute 15', 'knee': 'Revolute 17'},
-    'BL': {'hip': 'Revolute 49', 'femur': 'Revolute 14', 'knee': 'Revolute 22'},
-    'BR': {'hip': 'Revolute 48', 'femur': 'Revolute 16', 'knee': 'Revolute 18'},
+    'FL': {'hip': 'Revolute 49', 'femur': 'Revolute 14', 'knee': 'Revolute 22'},
+    'FR': {'hip': 'Revolute 48', 'femur': 'Revolute 16', 'knee': 'Revolute 18'},
+    'BL': {'hip': 'Revolute 50', 'femur': 'Revolute 13', 'knee': 'Revolute 21'},
+    'BR': {'hip': 'Revolute 51', 'femur': 'Revolute 15', 'knee': 'Revolute 17'},
 }
 
 # ---- sign conventions from YOUR manual testing ----
 # Positive canonical hip angle = leg abducts OUTWARD (away from body).
 HIP_SIGN = {
-    'FR': -1,   # 51: + = inside -> outside needs negative canonical->cmd... see note below
-    'FL': +1,   # 50: - = inside, + = outside  -> matches canonical directly
+    'FR': -1,   # 51: + = inside -> outside needs negative canonical->cmd
+    'FL': +1,   # 50: + = outside matches canonical directly
     'BR': -1,   # 48: + = inside, - = outside  -> flip
-    'BL': +1,   # 49: - = inside, + = outside  -> matches canonical directly
+    'BL': +1,   # 49: + = outside matches canonical directly
 }
 
 # Positive canonical femur angle = femur swings FORWARD.
 FEMUR_SIGN = {
-    'FL': +1,   # 13: + = forward
-    'BL': +1,   # 14: + = forward
-    'FR': -1,   # 15: - = forward
-    'BR': -1,   # 16: - = forward
+    'FL': -1,
+    'FR': 1,
+    'BL': -1,
+    'BR': 1,
 }
 
 # Positive canonical knee angle = tibia swings FORWARD (relative to femur).
 KNEE_SIGN = {
-    'FR': -1,   # 17: - = forward
-    'BR': -1,   # 18: - = forward
-    'FL': +1,   # 21: + = forward
-    'BL': +1,   # 22: + = forward
+    'FL': 1,
+    'FR': -1,
+    'BL': 1,
+    'BR': -1,
 }
 
 
 def leg_ik(x, y, z, femur_length=FEMUR_LENGTH, tibia_length=TIBIA_LENGTH,
-           coxa_length=COXA_LENGTH):
+           coxa_length=COXA_LENGTH, knee_bend_dir=1.0):
     """
     Compute canonical (sign-independent) hip, femur, knee angles for a
     desired foot position (x, y, z) in the leg-local frame described above,
@@ -90,36 +95,35 @@ def leg_ik(x, y, z, femur_length=FEMUR_LENGTH, tibia_length=TIBIA_LENGTH,
 
     Raises ValueError if the target is unreachable.
     """
-    # Hip abduction angle: rotate around x-axis to point at (y, z)
-    hip_angle = math.atan2(y, -z)  # -z because z is "up", leg hangs down
-
-    # Distance from hip to foot in the (rotated) leg plane, after removing
-    # the coxa offset and the lateral (hip-abduction) component
-    horiz_dist = math.sqrt(y**2 + z**2) - coxa_length
-    leg_reach = math.sqrt(x**2 + horiz_dist**2)
-
-    max_reach = femur_length + tibia_length
-    if leg_reach > max_reach * 0.999:
-        raise ValueError(f"Target unreachable: reach={leg_reach:.4f} > max={max_reach:.4f}")
-    if leg_reach < abs(femur_length - tibia_length) * 1.001:
-        raise ValueError(f"Target too close: reach={leg_reach:.4f}")
-
-    # Law of cosines for knee angle
+    # Exact analytical IK for a leg with a lateral offset (coxa_length)
+    L_sq = y**2 + z**2
+    if L_sq < coxa_length**2:
+        raise ValueError(f"Target too close laterally: L={math.sqrt(L_sq):.4f} < coxa={coxa_length}")
+    
+    L_vert = math.sqrt(abs(L_sq - coxa_length**2))
+    
+    # Hip angle (roll) - Note: z is negative, so -z is positive (pointing down relative to hip)
+    hip_angle = math.atan2(y, -z) - math.atan2(coxa_length, L_vert)
+    
+    # 2. In the X-(YZ) plane, calculate femur and knee angles
+    leg_reach = math.sqrt(x**2 + L_vert**2)
+    
+    # Knee interior angle using Law of Cosines
     cos_knee = (femur_length**2 + tibia_length**2 - leg_reach**2) / (2 * femur_length * tibia_length)
-    cos_knee = max(-1.0, min(1.0, cos_knee))
+    cos_knee = max(min(cos_knee, 1.0), -1.0) # Clamp to avoid domain errors
     knee_interior = math.acos(cos_knee)
     
-    # Original geometric solution (positive knee angle, subtract femur offset)
-    knee_angle = math.pi - knee_interior
-
-    # Femur angle: angle to target plus angle contributed by knee bend
-    angle_to_target = math.atan2(x, horiz_dist)
-    cos_femur_offset = (femur_length**2 + leg_reach**2 - tibia_length**2) / (2 * femur_length * leg_reach)
-    cos_femur_offset = max(-1.0, min(1.0, cos_femur_offset))
-    femur_offset = math.acos(cos_femur_offset)
+    # Canonical knee angle: 0 means straight, positive means bent
+    knee_angle = knee_bend_dir * (math.pi - knee_interior)
     
-    femur_angle = angle_to_target - femur_offset
-
+    # Femur angle using Law of Cosines
+    angle_to_target = math.atan2(x, L_vert)
+    cos_femur = (femur_length**2 + leg_reach**2 - tibia_length**2) / (2 * femur_length * leg_reach)
+    cos_femur = max(min(cos_femur, 1.0), -1.0)
+    femur_offset = math.acos(cos_femur)
+    
+    femur_angle = angle_to_target + knee_bend_dir * femur_offset
+    
     return hip_angle, femur_angle, knee_angle
 
 
@@ -128,13 +132,17 @@ def leg_ik_to_command(leg_name, x, y, z):
     Full pipeline: canonical IK -> per-leg signed joint commands.
     Returns dict {joint_name: angle_command} for this leg's 3 joints.
     """
-    hip_c, femur_c, knee_c = leg_ik(x, y, z)
+    bend_dir = KNEE_BEND_DIR[leg_name]
+    hip_c, femur_c, knee_c = leg_ik(x, y, z, knee_bend_dir=bend_dir)
 
     names = LEGS[leg_name]
+    
+    # No structural offsets needed because the real robot is assembled
+    # with straight legs at the zero position.
     return {
         names['hip']:   HIP_SIGN[leg_name] * hip_c,
-        names['femur']: FEMUR_SIGN[leg_name] * femur_c,
-        names['knee']:  KNEE_SIGN[leg_name] * knee_c,
+        names['femur']: FEMUR_SIGN[leg_name] * (femur_c - 0.522),
+        names['knee']:  KNEE_SIGN[leg_name] * (knee_c - 1.042),
     }
 
 

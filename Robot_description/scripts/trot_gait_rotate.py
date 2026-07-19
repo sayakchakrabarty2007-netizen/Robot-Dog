@@ -44,8 +44,9 @@ BLEND_DURATION = 2.0          # seconds to ramp gait amplitudes from 0→full
 ROTATION_STRIDE = 0.08        # how far each foot moves per step along its arc (meters)
                                # Increase → faster rotation. Decrease → slower, more stable.
 STEP_HEIGHT   = 0.015         # foot lift height during swing (meters)
-STANCE_Z_HEIGHT = -0.215      # standing height (same as forward gait)
+STANCE_Z_HEIGHT = -0.170      # MUST be bent! Max leg length is 0.227m
 BASE_HIP_SPRAWL = 0.025       # outward splay for wide stance (meters)
+PITCH_OFFSET = 0.005          # tilt compensation: shortens front legs, lengthens back legs (meters)
 # ===================================================================
 
 
@@ -287,10 +288,18 @@ class RotateGaitNode(Node):
             # Add outward sprawl for stability
             y += BASE_HIP_SPRAWL
 
+            # Pitch compensation
+            z_target = STANCE_Z_HEIGHT
+            if leg_name in ['FL', 'FR']:
+                z_target += PITCH_OFFSET
+            else:
+                z_target -= PITCH_OFFSET
+
             # Blend: interpolate between standing position and gait position
-            x_blended = x * self.blend_factor
+            # Shift X backwards by 2.5cm to align support polygon with CoM
+            x_blended = -0.025 + x * self.blend_factor
             y_blended = y * self.blend_factor
-            z_blended = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
+            z_blended = z_target + (z - STANCE_Z_HEIGHT) * self.blend_factor
 
             # Run inverse kinematics → joint angles
             try:
@@ -310,8 +319,15 @@ class RotateGaitNode(Node):
         """Send the IK-computed standing pose (feet directly below hips with sprawl)."""
         commands = {}
         for leg_name in LEGS:
+            z_stand = STANCE_Z_HEIGHT
+            if leg_name in ['FL', 'FR']:
+                z_stand += PITCH_OFFSET
+            else:
+                z_stand -= PITCH_OFFSET
+
             try:
-                leg_commands = leg_ik_to_command(leg_name, 0.0, BASE_HIP_SPRAWL, STANCE_Z_HEIGHT)
+                # Shift X backwards by 2.5cm to align support polygon with CoM
+                leg_commands = leg_ik_to_command(leg_name, -0.025, BASE_HIP_SPRAWL, z_stand)
                 commands.update(leg_commands)
             except ValueError:
                 pass

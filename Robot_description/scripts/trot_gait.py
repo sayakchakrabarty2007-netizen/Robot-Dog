@@ -38,16 +38,17 @@ SETTLE_TIME = 1.0             # seconds to hold standing pose at start
 BLEND_DURATION = 2.0          # seconds to ramp gait amplitudes from 0→full
 
 # --- Forward gait parameters ---
-STRIDE_LENGTH = 0.04          # fore/aft travel of foot (meters)
-STEP_HEIGHT   = 0.015         # foot lift height during swing (meters)
-STANCE_Z_HEIGHT = -0.220      # standing leg height (straighter legs = less torque needed)
+STRIDE_LENGTH = 0.025          # total fore/aft travel of the foot (meters)
+STEP_HEIGHT   = 0.025         # increased foot lift height for better ground clearance (meters)
+STANCE_Z_HEIGHT = -0.170      # MUST be bent! Max leg length is 0.227m.
 BASE_HIP_SPRAWL = 0.025       # outward splay for wide stance (meters)
-BODY_SHIFT_Y = 0.010          # shifts body left by 10mm to take weight off right legs
-ROLL_OFFSET = 0.005           # Z-height offset: + extends right legs / shortens left legs to fix right-tilt
+BODY_SHIFT_Y = 0.000          # perfectly centered (no lateral shift)
+ROLL_OFFSET = 0.000           # perfectly level (no roll tilt offset)
+PITCH_OFFSET = 0.005          # tilt compensation: shortens front legs, lengthens back legs (meters)
 
-# --- Forward IMU Yaw PD Controller ---
-YAW_KP = 0.1                 # proportional gain
-YAW_KD = 0.02                # derivative gain
+# --- Forward IMU Yaw PD Controller (disabled to prevent spin feedback loops) ---
+YAW_KP = 0.0                 # proportional gain
+YAW_KD = 0.0                 # derivative gain
 YAW_MAX_CORRECTION = 0.15    # max differential steering clamp
 
 # --- Rotation gait parameters ---
@@ -150,13 +151,13 @@ def compute_forward_foot(phase_01):
 
     if phase_01 < 0.5:
         frac = phase_01 / 0.5
-        x = -half_stride + STRIDE_LENGTH * smoother_step(frac)
+        x = half_stride - STRIDE_LENGTH * smoother_step(frac)
         z = STANCE_Z_HEIGHT + STEP_HEIGHT * soft_bell(frac)
         is_swing = True
     else:
         frac = (phase_01 - 0.5) / 0.5
-        x = half_stride - STRIDE_LENGTH * smoother_step(frac)
-        z = STANCE_Z_HEIGHT + 0.005 * math.sin(math.pi * frac)
+        x = -half_stride + STRIDE_LENGTH * smoother_step(frac)
+        z = STANCE_Z_HEIGHT
         is_swing = False
 
     return x, 0.0, z, is_swing
@@ -202,7 +203,7 @@ class TrotGaitNode(Node):
             Imu, '/imu/data', self.imu_callback, 10
         )
 
-        self.start_time = time.time()
+        self.start_time = self.get_clock().now()
         self.timer = self.create_timer(1.0 / CONTROL_RATE_HZ, self.tick)
 
         # Joint order
@@ -223,7 +224,7 @@ class TrotGaitNode(Node):
 
         # --- State Machine ---
         self.state = STATE_SETTLE
-        self.state_start_time = time.time()
+        self.state_start_time = self.get_clock().now()
         self.gait_time_offset = 0.0   # continuous gait clock for smooth phase
         self.turn_start_yaw = 0.0     # yaw at the start of a turn
 
@@ -246,7 +247,7 @@ class TrotGaitNode(Node):
         """Transition to a new state, resetting the state timer."""
         self.get_logger().info(f"State: {self.state} → {new_state}")
         self.state = new_state
-        self.state_start_time = time.time()
+        self.state_start_time = self.get_clock().now()
         self.prev_yaw_error = 0.0
 
         # When entering a FORWARD state, lock the current yaw as the heading target
@@ -265,16 +266,16 @@ class TrotGaitNode(Node):
 
     def state_elapsed(self):
         """Time elapsed since entering the current state."""
-        return time.time() - self.state_start_time
+        return (self.get_clock().now() - self.state_start_time).nanoseconds / 1e9
 
     def tick(self):
-        t = time.time() - self.start_time
-
         # ======== STATE MACHINE ========
 
         if self.state == STATE_SETTLE:
             self.publish_standing_pose()
-            if t >= SETTLE_TIME:
+            # Calculate settle duration using ROS time
+            settle_elapsed = (self.get_clock().now() - self.start_time).nanoseconds / 1e9
+            if settle_elapsed >= SETTLE_TIME:
                 if not self.imu_received:
                     self.get_logger().error("CRITICAL: NO IMU DATA RECEIVED! The IMU bridge is not running.")
                     self.get_logger().error("Turns will use a time-based fallback instead of measuring 90 degrees.")
@@ -337,8 +338,6 @@ class TrotGaitNode(Node):
         elif self.state == STATE_DONE:
             self.publish_standing_pose()
 
-    # ---- Forward walking tick ----
-
     def tick_forward(self):
         gait_t = self.state_elapsed()
         self.blend_factor = smoothstep(min(1.0, gait_t / BLEND_DURATION))
@@ -369,10 +368,17 @@ class TrotGaitNode(Node):
             else:
                 y += BASE_HIP_SPRAWL + dynamic_body_shift
 
+            # Pitch compensation
+            z_target = STANCE_Z_HEIGHT
+            if leg_name in ['FL', 'FR']:
+                z_target += PITCH_OFFSET
+            else:
+                z_target -= PITCH_OFFSET
+
             # Blend
-            x_b = x * self.blend_factor
+            x_b = -0.025 + x * self.blend_factor
             y_b = y * self.blend_factor
-            z_b = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
+            z_b = z_target + (z - STANCE_Z_HEIGHT) * self.blend_factor
 
             try:
                 leg_commands = leg_ik_to_command(leg_name, x_b, y_b, z_b)
@@ -385,8 +391,6 @@ class TrotGaitNode(Node):
                 continue
 
         self.publish_commands(commands)
-
-    # ---- Rotation tick ----
 
     def tick_rotate(self, turn_sign, tangents):
         gait_t = self.state_elapsed()
@@ -403,10 +407,17 @@ class TrotGaitNode(Node):
             # Add sprawl
             y += BASE_HIP_SPRAWL
 
+            # Pitch compensation
+            z_target = STANCE_Z_HEIGHT
+            if leg_name in ['FL', 'FR']:
+                z_target += PITCH_OFFSET
+            else:
+                z_target -= PITCH_OFFSET
+
             # Blend
-            x_b = x * self.blend_factor
+            x_b = -0.025 + x * self.blend_factor
             y_b = y * self.blend_factor
-            z_b = STANCE_Z_HEIGHT + (z - STANCE_Z_HEIGHT) * self.blend_factor
+            z_b = z_target + (z - STANCE_Z_HEIGHT) * self.blend_factor
 
             try:
                 leg_commands = leg_ik_to_command(leg_name, x_b, y_b, z_b)
@@ -436,8 +447,13 @@ class TrotGaitNode(Node):
         commands = {}
         for leg_name in LEGS:
             y = BASE_HIP_SPRAWL
+            z_stand = STANCE_Z_HEIGHT
+            if leg_name in ['FL', 'FR']:
+                z_stand += PITCH_OFFSET
+            else:
+                z_stand -= PITCH_OFFSET
             try:
-                leg_commands = leg_ik_to_command(leg_name, 0.0, y, STANCE_Z_HEIGHT)
+                leg_commands = leg_ik_to_command(leg_name, -0.025, y, z_stand)
                 commands.update(leg_commands)
             except ValueError:
                 pass
